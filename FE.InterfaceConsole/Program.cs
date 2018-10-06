@@ -25,11 +25,13 @@ namespace FE.InterfaceConsole
             ti_intejesrv.Elapsed += new System.Timers.ElapsedEventHandler(ti_intejesrv_Elapsed);
             ti_intejesrv.Enabled = true;
             ti_intejesrv.Start();
+            //ti_intejesrv_Elapsed();
 
             Console.ReadLine();
         }
 
         public static void ti_intejesrv_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        //public static void ti_intejesrv_Elapsed()
         {
             ThreadStart ts_srvprosun = new ThreadStart(ml_proceso_sunat);
             Thread.CurrentThread.Name = "SRVPROSUN";
@@ -125,12 +127,12 @@ namespace FE.InterfaceConsole
                     {
                         BaseDatos BDClienti = new BaseDatos(oBEMaeemiele.no_basnomsrv, BBDD, oBEMaeemiele.no_basnombas,
                             oBEMaeemiele.no_basusrbas, oBEMaeemiele.no_basusrpas);
-                        Console.WriteLine("RUC:" + oBEMaeemiele.nu_eminumruc + " IDDOC: " + item.f5_cnumser + "-" + item.f5_cnumdoc);
+                        Console.WriteLine("RUC:" + oBEMaeemiele.nu_eminumruc + " IDDOC: " + item.fa1_cserdoc + "-" + item.fa1_cnumdoc);
                         //Obteniendo el detalle dl documento
                         BDClienti.Conectar();
-                        BDClienti.Añadir_Parametro(0, "CO_DETALTIDO", "S", item.f5_ctd);
-                        BDClienti.Añadir_Parametro(1, "NU_DETSERSUN", "S", item.f5_cnumser);
-                        BDClienti.Añadir_Parametro(2, "NU_DETNUMSUN", "S", item.f5_cnumdoc);
+                        BDClienti.Añadir_Parametro(0, "CO_DETALTIDO", "S", item.fa1_ctipdoc);
+                        BDClienti.Añadir_Parametro(1, "NU_DETSERSUN", "S", item.fa1_cserdoc);
+                        BDClienti.Añadir_Parametro(2, "NU_DETNUMSUN", "S", item.fa1_cnumdoc);
                         BDClienti.Añadir_Parametro(3, "NO_DOCELEDET", "S", oBEMaeemiele.no_tabfacdet);
                         IDataReader dr_clidocdet = BDClienti.Dame_Datos_DR("SPS_TABFACDET_BY_TABFACCAB", true, "P");
                         ListBEDocdetcli oListBEDocdetcli = new ListBEDocdetcli();
@@ -149,17 +151,17 @@ namespace FE.InterfaceConsole
                         BDFaci.Añadir_Parametro(2, "XM_DOCELEDET", "XML", xm_det.OuterXml);
                         BDFaci.Ejecutar_PA("SPI_TBL_DOCELECD", true);
                         BDFaci.Desconectar();
-                        Console.WriteLine("RUC:" + oBEMaeemiele.nu_eminumruc + " CDDOC: " + item.f5_cnumser + "-" + item.f5_cnumdoc);
+                        Console.WriteLine("RUC:" + oBEMaeemiele.nu_eminumruc + " CDDOC: " + item.fa1_cserdoc + "-" + item.fa1_cnumdoc);
                         //Actualizar el estado del documento en la base de datos
                         BDClient.Conectar();
-                        BDClient.Añadir_Parametro(0, "CO_DOCALTIDO", "S", item.f5_ctd);
-                        BDClient.Añadir_Parametro(1, "NU_DOCSERSUN", "S", item.f5_cnumser);
-                        BDClient.Añadir_Parametro(2, "NU_DOCNUMSUN", "S", item.f5_cnumdoc);
+                        BDClient.Añadir_Parametro(0, "CO_DOCALTIDO", "S", item.fa1_ctipdoc);
+                        BDClient.Añadir_Parametro(1, "NU_DOCSERSUN", "S", item.fa1_cserdoc);
+                        BDClient.Añadir_Parametro(2, "NU_DOCNUMSUN", "S", item.fa1_cnumdoc);
                         BDClient.Añadir_Parametro(3, "NO_DOCELECAB", "S", oBEMaeemiele.no_tabfaccab);
                         BDClient.Ejecutar_PA("SPU_TABFACCAB_MIG", true);
                         BDClient.Desconectar();
 
-                        Console.WriteLine("RUC:" + oBEMaeemiele.nu_eminumruc + " UDDOC: " + item.f5_cnumser + "-" + item.f5_cnumdoc);
+                        Console.WriteLine("RUC:" + oBEMaeemiele.nu_eminumruc + " UDDOC: " + item.fa1_cserdoc + "-" + item.fa1_cnumdoc);
                     }
                     catch (Exception ex)
                     {
@@ -249,206 +251,208 @@ namespace FE.InterfaceConsole
             while (dr_clidoccab.Read())
             {
                 BEDoccabcli oBEDoccabcli = new BEDoccabcli();
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODAGE"))))
-                    oBEDoccabcli.f5_ccodage = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODAGE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTD"))))
-                    oBEDoccabcli.f5_ctd = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNUMSER"))))
-                    oBEDoccabcli.f5_cnumser = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNUMSER"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNUMDOC"))))
-                    oBEDoccabcli.f5_cnumdoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNUMDOC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNROPED"))))
-                    oBEDoccabcli.f5_cnroped = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNROPED"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECDOC"))))
-                    oBEDoccabcli.f5_dfecdoc = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECDOC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECVEN"))))
-                    oBEDoccabcli.f5_dfecven = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECVEN"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CDH"))))
-                    oBEDoccabcli.f5_cdh = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CDH"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CVENDE"))))
-                    oBEDoccabcli.f5_cvende = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CVENDE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNROCAJ"))))
-                    oBEDoccabcli.f5_cnrocaj = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNROCAJ"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODCLI"))))
-                    oBEDoccabcli.f5_ccodcli = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODCLI"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNOMBRE"))))
-                    oBEDoccabcli.f5_cnombre = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNOMBRE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CDIRECC"))))
-                    oBEDoccabcli.f5_cdirecc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CDIRECC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CRUC"))))
-                    oBEDoccabcli.f5_cruc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CRUC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CALMA"))))
-                    oBEDoccabcli.f5_calma = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CALMA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CFORVEN"))))
-                    oBEDoccabcli.f5_cforven = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CFORVEN"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODMON"))))
-                    oBEDoccabcli.f5_ccodmon = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODMON"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NTIPCAM"))))
-                    oBEDoccabcli.f5_ntipcam = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NTIPCAM"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NIMPORT"))))
-                    oBEDoccabcli.f5_nimport = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NIMPORT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NIMPIGV"))))
-                    oBEDoccabcli.f5_nimpigv = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NIMPIGV"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NSALDO"))))
-                    oBEDoccabcli.f5_nsaldo = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NSALDO"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NDESCTO"))))
-                    oBEDoccabcli.f5_ndescto = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NDESCTO"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNUMORD"))))
-                    oBEDoccabcli.f5_cnumord = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNUMORD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CRFTD"))))
-                    oBEDoccabcli.f5_crftd = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CRFTD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CRFNSER"))))
-                    oBEDoccabcli.f5_crfnser = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CRFNSER"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CRFNDOC"))))
-                    oBEDoccabcli.f5_crfndoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CRFNDOC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CGLOSA"))))
-                    oBEDoccabcli.f5_cglosa = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CGLOSA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CESTADO"))))
-                    oBEDoccabcli.f5_cestado = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CESTADO"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CFACGUI"))))
-                    oBEDoccabcli.f5_cfacgui = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CFACGUI"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODTRA"))))
-                    oBEDoccabcli.f5_ccodtra = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODTRA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCENCOS"))))
-                    oBEDoccabcli.f5_ccencos = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCENCOS"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODMAQ"))))
-                    oBEDoccabcli.f5_ccodmaq = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODMAQ"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CDESTIN"))))
-                    oBEDoccabcli.f5_cdestin = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CDESTIN"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTF"))))
-                    oBEDoccabcli.f5_ctf = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTF"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTIPANE"))))
-                    oBEDoccabcli.f5_ctipane = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTIPANE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CANEREF"))))
-                    oBEDoccabcli.f5_caneref = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CANEREF"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NPORDE1"))))
-                    oBEDoccabcli.f5_nporde1 = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NPORDE1"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NPORDE2"))))
-                    oBEDoccabcli.f5_nporde2 = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NPORDE2"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NFLETE"))))
-                    oBEDoccabcli.f5_nflete = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NFLETE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NEMBAL"))))
-                    oBEDoccabcli.f5_nembal = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NEMBAL"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NTASA"))))
-                    oBEDoccabcli.f5_ntasa = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NTASA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CUSUOPE"))))
-                    oBEDoccabcli.f5_cusuope = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CUSUOPE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CUSUSEC"))))
-                    oBEDoccabcli.f5_cususec = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CUSUSEC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODCAD"))))
-                    oBEDoccabcli.f5_ccodcad = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODCAD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODINT"))))
-                    oBEDoccabcli.f5_ccodint = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODINT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODAUT"))))
-                    oBEDoccabcli.f5_ccodaut = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODAUT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CREPA"))))
-                    oBEDoccabcli.f5_crepa = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CREPA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CUSUCRE"))))
-                    oBEDoccabcli.f5_cusucre = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CUSUCRE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECCRE"))))
-                    oBEDoccabcli.f5_dfeccre = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECCRE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CUSUMOD"))))
-                    oBEDoccabcli.f5_cusumod = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CUSUMOD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECMOD"))))
-                    oBEDoccabcli.f5_dfecmod = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECMOD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTNC"))))
-                    oBEDoccabcli.f5_ctnc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTNC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CLINEA"))))
-                    oBEDoccabcli.f5_clinea = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CLINEA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CIMPRE"))))
-                    oBEDoccabcli.f5_cimpre = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CIMPRE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCJENC"))))
-                    oBEDoccabcli.f5_ccjenc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCJENC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CVENDE2"))))
-                    oBEDoccabcli.f5_cvende2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CVENDE2"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NPORVEN"))))
-                    oBEDoccabcli.f5_nporven = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NPORVEN"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NPORVE2"))))
-                    oBEDoccabcli.f5_nporve2 = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NPORVE2"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CPERIOD"))))
-                    oBEDoccabcli.f5_cperiod = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CPERIOD"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CRFTD2"))))
-                    oBEDoccabcli.f5_crftd2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CRFTD2"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CRFNDO2"))))
-                    oBEDoccabcli.f5_crfndo2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CRFNDO2"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECANU"))))
-                    oBEDoccabcli.f5_dfecanu = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECANU"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTIPDNC"))))
-                    oBEDoccabcli.f5_ctipdnc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTIPDNC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODVEH"))))
-                    oBEDoccabcli.f5_ccodveh = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODVEH"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODFER"))))
-                    oBEDoccabcli.f5_ccodfer = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODFER"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTIPDEV"))))
-                    oBEDoccabcli.f5_ctipdev = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTIPDEV"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CSUBDIA"))))
-                    oBEDoccabcli.f5_csubdia = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CSUBDIA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCOMPRO"))))
-                    oBEDoccabcli.f5_ccompro = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCOMPRO"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECENT"))))
-                    oBEDoccabcli.f5_dfecent = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECENT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNROPLA"))))
-                    oBEDoccabcli.f5_cnropla = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNROPLA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CAGEOT"))))
-                    oBEDoccabcli.f5_cageot = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CAGEOT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CORDTRA"))))
-                    oBEDoccabcli.f5_cordtra = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CORDTRA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCHASIS"))))
-                    oBEDoccabcli.f5_cchasis = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCHASIS"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CHRADOC"))))
-                    oBEDoccabcli.f5_chradoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CHRADOC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCOSUPV"))))
-                    oBEDoccabcli.f5_ccosupv = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCOSUPV"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CFLGPLA"))))
-                    oBEDoccabcli.f5_cflgpla = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CFLGPLA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTORIGEN"))))
-                    oBEDoccabcli.f5_ctorigen = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTORIGEN"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTDESTIN"))))
-                    oBEDoccabcli.f5_ctdestin = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTDESTIN"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CMONPER"))))
-                    oBEDoccabcli.f5_cmonper = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CMONPER"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NIMPPER"))))
-                    oBEDoccabcli.f5_nimpper = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NIMPPER"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CGUIFAC"))))
-                    oBEDoccabcli.f5_cguifac = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CGUIFAC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_AVANEXO"))))
-                    oBEDoccabcli.f5_avanexo = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_AVANEXO"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_ACODANE"))))
-                    oBEDoccabcli.f5_acodane = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_ACODANE"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCONTRAT"))))
-                    oBEDoccabcli.f5_ccontrat = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCONTRAT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_COBRA"))))
-                    oBEDoccabcli.f5_cobra = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_COBRA"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CPERIOC"))))
-                    oBEDoccabcli.f5_cperioc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CPERIOC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCERTIF"))))
-                    oBEDoccabcli.f5_ccertif = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCERTIF"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CCODTAL"))))
-                    oBEDoccabcli.f5_ccodtal = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CCODTAL"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CTIPFOR"))))
-                    oBEDoccabcli.f5_ctipfor = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CTIPFOR"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NPORPER"))))
-                    oBEDoccabcli.f5_nporper = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NPORPER"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_DFECREF"))))
-                    oBEDoccabcli.f5_dfecref = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("F5_DFECREF"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CMORFTC"))))
-                    oBEDoccabcli.f5_cmorftc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CMORFTC"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_NTCREF"))))
-                    oBEDoccabcli.f5_ntcref = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("F5_NTCREF"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CNCAPLI"))))
-                    oBEDoccabcli.f5_cncapli = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CNCAPLI"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_COD_ESTADO_SUNAT"))))
-                    oBEDoccabcli.f5_cod_estado_sunat = dr_clidoccab.GetInt32(dr_clidoccab.GetOrdinal("F5_COD_ESTADO_SUNAT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_MENSAJE_SUNAT"))))
-                    oBEDoccabcli.f5_mensaje_sunat = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_MENSAJE_SUNAT"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_ESTADO_ENVIO"))))
-                    oBEDoccabcli.f5_estado_envio = dr_clidoccab.GetInt32(dr_clidoccab.GetOrdinal("F5_ESTADO_ENVIO"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_XML"))))
-                    oBEDoccabcli.f5_xml = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_XML"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_CDR"))))
-                    oBEDoccabcli.f5_cdr = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_CDR"));
-                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("F5_PDF"))))
-                    oBEDoccabcli.f5_pdf = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("F5_PDF"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODSUC"))))
+                    oBEDoccabcli.fa1_ccodsuc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODSUC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTIPDOC"))))
+                    oBEDoccabcli.fa1_ctipdoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTIPDOC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CSERDOC"))))
+                    oBEDoccabcli.fa1_cserdoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CSERDOC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNUMDOC"))))
+                    oBEDoccabcli.fa1_cnumdoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNUMDOC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECDOC"))))
+                    oBEDoccabcli.fa1_dfecdoc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECDOC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECVEN"))))
+                    oBEDoccabcli.fa1_dfecven = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECVEN"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODCLI"))))
+                    oBEDoccabcli.fa1_ccodcli = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODCLI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNOMCLI"))))
+                    oBEDoccabcli.fa1_cnomcli = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNOMCLI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CRUCCLI"))))
+                    oBEDoccabcli.fa1_cruccli = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CRUCCLI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDIRCLI"))))
+                    oBEDoccabcli.fa1_cdircli = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDIRCLI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CFORVEN"))))
+                    oBEDoccabcli.fa1_cforven = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CFORVEN"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODVEN"))))
+                    oBEDoccabcli.fa1_ccodven = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODVEN"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODVE2"))))
+                    oBEDoccabcli.fa1_ccodve2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODVE2"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTGDORE"))))
+                    oBEDoccabcli.fa1_ctgdore = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTGDORE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CSEDORE"))))
+                    oBEDoccabcli.fa1_csedore = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CSEDORE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNUDORE"))))
+                    oBEDoccabcli.fa1_cnudore = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNUDORE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTGDOR2"))))
+                    oBEDoccabcli.fa1_ctgdor2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTGDOR2"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNUDOR2"))))
+                    oBEDoccabcli.fa1_cnudor2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNUDOR2"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTIPOPE"))))
+                    oBEDoccabcli.fa1_ctipope = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTIPOPE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODALM"))))
+                    oBEDoccabcli.fa1_ccodalm = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODALM"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCENCOS"))))
+                    oBEDoccabcli.fa1_ccencos = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCENCOS"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CGLOSA1"))))
+                    oBEDoccabcli.fa1_cglosa1 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CGLOSA1"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CGLOSA2"))))
+                    oBEDoccabcli.fa1_cglosa2 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CGLOSA2"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODMON"))))
+                    oBEDoccabcli.fa1_ccodmon = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODMON"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NTIPCAM"))))
+                    oBEDoccabcli.fa1_ntipcam = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NTIPCAM"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NIMPORT"))))
+                    oBEDoccabcli.fa1_nimport = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NIMPORT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPORDE1"))))
+                    oBEDoccabcli.fa1_nporde1 = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPORDE1"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPORDE2"))))
+                    oBEDoccabcli.fa1_nporde2 = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPORDE2"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPORDE3"))))
+                    oBEDoccabcli.fa1_nporde3 = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPORDE3"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDIRECC"))))
+                    oBEDoccabcli.fa1_cdirecc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDIRECC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDEBHAB"))))
+                    oBEDoccabcli.fa1_cdebhab = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDEBHAB"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CSTOCK"))))
+                    oBEDoccabcli.fa1_cstock = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CSTOCK"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CESTADO"))))
+                    oBEDoccabcli.fa1_cestado = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CESTADO"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CUSUCRE"))))
+                    oBEDoccabcli.fa1_cusucre = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CUSUCRE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECCRE"))))
+                    oBEDoccabcli.fa1_dfeccre = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECCRE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CUSUMOD"))))
+                    oBEDoccabcli.fa1_cusumod = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CUSUMOD"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECMOD"))))
+                    oBEDoccabcli.fa1_dfecmod = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECMOD"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDOCORI"))))
+                    oBEDoccabcli.fa1_cdocori = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDOCORI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDOCATE"))))
+                    oBEDoccabcli.fa1_cdocate = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDOCATE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODUBI"))))
+                    oBEDoccabcli.fa1_ccodubi = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODUBI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTGPAIS"))))
+                    oBEDoccabcli.fa1_ctgpais = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTGPAIS"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CSUDORE"))))
+                    oBEDoccabcli.fa1_csudore = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CSUDORE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CSUCATE"))))
+                    oBEDoccabcli.fa1_csucate = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CSUCATE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNUMATE"))))
+                    oBEDoccabcli.fa1_cnumate = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNUMATE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CHORCRE"))))
+                    oBEDoccabcli.fa1_chorcre = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CHORCRE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CHORMOD"))))
+                    oBEDoccabcli.fa1_chormod = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CHORMOD"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDIRFIS"))))
+                    oBEDoccabcli.fa1_cdirfis = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDIRFIS"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CORTSUC"))))
+                    oBEDoccabcli.fa1_cortsuc = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CORTSUC"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CORTTAL"))))
+                    oBEDoccabcli.fa1_corttal = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CORTTAL"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CORTNUM"))))
+                    oBEDoccabcli.fa1_cortnum = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CORTNUM"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODCAJ"))))
+                    oBEDoccabcli.fa1_ccodcaj = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODCAJ"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CFLACAN"))))
+                    oBEDoccabcli.fa1_cflacan = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CFLACAN"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTGDOR3"))))
+                    oBEDoccabcli.fa1_ctgdor3 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTGDOR3"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNUDOR3"))))
+                    oBEDoccabcli.fa1_cnudor3 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNUDOR3"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CFLAMAS"))))
+                    oBEDoccabcli.fa1_cflamas = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CFLAMAS"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NIMPPER"))))
+                    oBEDoccabcli.fa1_nimpper = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NIMPPER"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPORPER"))))
+                    oBEDoccabcli.fa1_nporper = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPORPER"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CFLACCT"))))
+                    oBEDoccabcli.fa1_cflacct = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CFLACCT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CORTVEH"))))
+                    oBEDoccabcli.fa1_cortveh = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CORTVEH"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECPRO"))))
+                    oBEDoccabcli.fa1_dfecpro = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECPRO"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPORIGV"))))
+                    oBEDoccabcli.fa1_nporigv = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPORIGV"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODTRA"))))
+                    oBEDoccabcli.fa1_ccodtra = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODTRA"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CNOMTRA"))))
+                    oBEDoccabcli.fa1_cnomtra = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CNOMTRA"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODVEH"))))
+                    oBEDoccabcli.fa1_ccodveh = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODVEH"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODFER"))))
+                    oBEDoccabcli.fa1_ccodfer = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODFER"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECREF"))))
+                    oBEDoccabcli.fa1_dfecref = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECREF"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODDIR"))))
+                    oBEDoccabcli.fa1_ccoddir = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODDIR"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CTIPMOV"))))
+                    oBEDoccabcli.fa1_ctipmov = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CTIPMOV"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CGLOSA3"))))
+                    oBEDoccabcli.fa1_cglosa3 = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CGLOSA3"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDEPORI"))))
+                    oBEDoccabcli.fa1_cdepori = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDEPORI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDEPDES"))))
+                    oBEDoccabcli.fa1_cdepdes = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDEPDES"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODPER"))))
+                    oBEDoccabcli.fa1_ccodper = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODPER"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CKEYINT"))))
+                    oBEDoccabcli.fa1_ckeyint = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CKEYINT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("EXISTE"))))
+                    oBEDoccabcli.existe = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("EXISTE"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("NUEVO"))))
+                    oBEDoccabcli.nuevo = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("NUEVO"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODSUR"))))
+                    oBEDoccabcli.fa1_ccodsur = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODSUR"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPERCMN"))))
+                    oBEDoccabcli.fa1_npercmn = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPERCMN"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPERCUS"))))
+                    oBEDoccabcli.fa1_npercus = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPERCUS"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NNUMIMP"))))
+                    oBEDoccabcli.fa1_nnumimp = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NNUMIMP"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CFLADET"))))
+                    oBEDoccabcli.fa1_cfladet = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CFLADET"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CFLAANT"))))
+                    oBEDoccabcli.fa1_cflaant = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CFLAANT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NIMPANT"))))
+                    oBEDoccabcli.fa1_nimpant = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NIMPANT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NSALANT"))))
+                    oBEDoccabcli.fa1_nsalant = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NSALANT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODREF"))))
+                    oBEDoccabcli.fa1_ccodref = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODREF"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDATADI"))))
+                    oBEDoccabcli.fa1_cdatadi = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDATADI"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODCOB"))))
+                    oBEDoccabcli.fa1_ccodcob = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODCOB"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODSUB"))))
+                    oBEDoccabcli.fa1_ccodsub = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODSUB"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCOMPRO"))))
+                    oBEDoccabcli.fa1_ccompro = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCOMPRO"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CANOCOM"))))
+                    oBEDoccabcli.fa1_canocom = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CANOCOM"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECANU"))))
+                    oBEDoccabcli.fa1_dfecanu = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_DFECANU"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CCODDET"))))
+                    oBEDoccabcli.fa1_ccoddet = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CCODDET"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NPORTAS"))))
+                    oBEDoccabcli.fa1_nportas = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NPORTAS"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CMONANT"))))
+                    oBEDoccabcli.fa1_cmonant = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CMONANT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_NSUMAPL"))))
+                    oBEDoccabcli.fa1_nsumapl = dr_clidoccab.GetDecimal(dr_clidoccab.GetOrdinal("FA1_NSUMAPL"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_COD_ESTADO_SUNAT"))))
+                    oBEDoccabcli.fa1_cod_estado_sunat = dr_clidoccab.GetInt32(dr_clidoccab.GetOrdinal("FA1_COD_ESTADO_SUNAT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_MENSAJE_SUNAT"))))
+                    oBEDoccabcli.fa1_mensaje_sunat = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_MENSAJE_SUNAT"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_ESTADO_ENVIO"))))
+                    oBEDoccabcli.fa1_estado_envio = dr_clidoccab.GetInt32(dr_clidoccab.GetOrdinal("FA1_ESTADO_ENVIO"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_XML"))))
+                    oBEDoccabcli.fa1_xml = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_XML"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_CDR"))))
+                    oBEDoccabcli.fa1_cdr = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_CDR"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_PDF"))))
+                    oBEDoccabcli.fa1_pdf = dr_clidoccab.GetString(dr_clidoccab.GetOrdinal("FA1_PDF"));
+                if ((!dr_clidoccab.IsDBNull(dr_clidoccab.GetOrdinal("FA1_DFECDOC9"))))
+                    oBEDoccabcli.fa1_dfecdoc9 = dr_clidoccab.GetDateTime(dr_clidoccab.GetOrdinal("FA1_DFECDOC9"));
 
                 oListBEDoccabcli.Add(oBEDoccabcli);
             }
@@ -462,184 +466,150 @@ namespace FE.InterfaceConsole
             while (dr_clidocdet.Read())
             {
                 BEDocdetcli oBEDocdetcli = new BEDocdetcli();
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCODAGE"))))
-                    oBEDocdetcli.f6_ccodage = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCODAGE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CTD"))))
-                    oBEDocdetcli.f6_ctd = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CTD"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNUMSER"))))
-                    oBEDocdetcli.f6_cnumser = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNUMSER"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNUMDOC"))))
-                    oBEDocdetcli.f6_cnumdoc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNUMDOC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CITEM"))))
-                    oBEDocdetcli.f6_citem = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CITEM"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCODIGO"))))
-                    oBEDocdetcli.f6_ccodigo = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCODIGO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CDESCRI"))))
-                    oBEDocdetcli.f6_cdescri = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CDESCRI"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CTR"))))
-                    oBEDocdetcli.f6_ctr = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CTR"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NCANTID"))))
-                    oBEDocdetcli.f6_ncantid = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NCANTID"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CUNIDAD"))))
-                    oBEDocdetcli.f6_cunidad = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CUNIDAD"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CSERIE"))))
-                    oBEDocdetcli.f6_cserie = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CSERIE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NCANREF"))))
-                    oBEDocdetcli.f6_ncanref = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NCANREF"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NUNXENV"))))
-                    oBEDocdetcli.f6_nunxenv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NUNXENV"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NNUMENV"))))
-                    oBEDocdetcli.f6_nnumenv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NNUMENV"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NSALDAR"))))
-                    oBEDocdetcli.f6_nsaldar = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NSALDAR"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPRECIO"))))
-                    oBEDocdetcli.f6_nprecio = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPRECIO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPRECI1"))))
-                    oBEDocdetcli.f6_npreci1 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPRECI1"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPREIMP"))))
-                    oBEDocdetcli.f6_npreimp = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPREIMP"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPREIM1"))))
-                    oBEDocdetcli.f6_npreim1 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPREIM1"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPRSIGV"))))
-                    oBEDocdetcli.f6_nprsigv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPRSIGV"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NDESCTO"))))
-                    oBEDocdetcli.f6_ndescto = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NDESCTO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NDESDOC"))))
-                    oBEDocdetcli.f6_ndesdoc = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NDESDOC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NVALDIS"))))
-                    oBEDocdetcli.f6_nvaldis = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NVALDIS"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIGVPOR"))))
-                    oBEDocdetcli.f6_nigvpor = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIGVPOR"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIGV"))))
-                    oBEDocdetcli.f6_nigv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIGV"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMPUS"))))
-                    oBEDocdetcli.f6_nimpus = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMPUS"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMPMN"))))
-                    oBEDocdetcli.f6_nimpmn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMPMN"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CTIPITM"))))
-                    oBEDocdetcli.f6_ctipitm = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CTIPITM"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORDE1"))))
-                    oBEDocdetcli.f6_nporde1 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORDE1"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMP01"))))
-                    oBEDocdetcli.f6_nimp01 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMP01"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORDE2"))))
-                    oBEDocdetcli.f6_nporde2 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORDE2"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMP02"))))
-                    oBEDocdetcli.f6_nimp02 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMP02"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORDE3"))))
-                    oBEDocdetcli.f6_nporde3 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORDE3"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMP03"))))
-                    oBEDocdetcli.f6_nimp03 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMP03"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORDE4"))))
-                    oBEDocdetcli.f6_nporde4 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORDE4"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMP04"))))
-                    oBEDocdetcli.f6_nimp04 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMP04"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORDE5"))))
-                    oBEDocdetcli.f6_nporde5 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORDE5"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMP05"))))
-                    oBEDocdetcli.f6_nimp05 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMP05"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORDES"))))
-                    oBEDocdetcli.f6_npordes = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORDES"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CESTADO"))))
-                    oBEDocdetcli.f6_cestado = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CESTADO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CVENDE"))))
-                    oBEDocdetcli.f6_cvende = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CVENDE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CALMA"))))
-                    oBEDocdetcli.f6_calma = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CALMA"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNROCAJ"))))
-                    oBEDocdetcli.f6_cnrocaj = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNROCAJ"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CSTOCK"))))
-                    oBEDocdetcli.f6_cstock = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CSTOCK"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_DFECDOC"))))
-                    oBEDocdetcli.f6_dfecdoc = dr_clidocdet.GetDateTime(dr_clidocdet.GetOrdinal("F6_DFECDOC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCODLIN"))))
-                    oBEDocdetcli.f6_ccodlin = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCODLIN"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNROTAB"))))
-                    oBEDocdetcli.f6_cnrotab = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNROTAB"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNUMPAQ"))))
-                    oBEDocdetcli.f6_cnumpaq = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNUMPAQ"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNDSCF"))))
-                    oBEDocdetcli.f6_cndscf = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNDSCF"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNDSCL"))))
-                    oBEDocdetcli.f6_cndscl = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNDSCL"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNDSCA"))))
-                    oBEDocdetcli.f6_cndsca = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNDSCA"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNDSCB"))))
-                    oBEDocdetcli.f6_cndscb = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNDSCB"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNFLAT"))))
-                    oBEDocdetcli.f6_cnflat = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNFLAT"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORCOM"))))
-                    oBEDocdetcli.f6_nporcom = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORCOM"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMPCOM"))))
-                    oBEDocdetcli.f6_nimpcom = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMPCOM"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CUSUCRE"))))
-                    oBEDocdetcli.f6_cusucre = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CUSUCRE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_DFECCRE"))))
-                    oBEDocdetcli.f6_dfeccre = dr_clidocdet.GetDateTime(dr_clidocdet.GetOrdinal("F6_DFECCRE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPRESIS"))))
-                    oBEDocdetcli.f6_npresis = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPRESIS"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CVENDE2"))))
-                    oBEDocdetcli.f6_cvende2 = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CVENDE2"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CITEMP"))))
-                    oBEDocdetcli.f6_citemp = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CITEMP"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NTEMPER"))))
-                    oBEDocdetcli.f6_ntemper = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NTEMPER"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NISCPOR"))))
-                    oBEDocdetcli.f6_niscpor = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NISCPOR"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NISC"))))
-                    oBEDocdetcli.f6_nisc = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NISC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NCANDEV"))))
-                    oBEDocdetcli.f6_ncandev = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NCANDEV"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCENCOS"))))
-                    oBEDocdetcli.f6_ccencos = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCENCOS"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CANEXO"))))
-                    oBEDocdetcli.f6_canexo = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CANEXO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CANEREF"))))
-                    oBEDocdetcli.f6_caneref = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CANEREF"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NCANDEC"))))
-                    oBEDocdetcli.f6_ncandec = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NCANDEC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CTIPPLA"))))
-                    oBEDocdetcli.f6_ctippla = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CTIPPLA"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCODPLA"))))
-                    oBEDocdetcli.f6_ccodpla = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCODPLA"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CTIPCAT"))))
-                    oBEDocdetcli.f6_ctipcat = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CTIPCAT"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNROPLA"))))
-                    oBEDocdetcli.f6_cnropla = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNROPLA"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCOSUPV"))))
-                    oBEDocdetcli.f6_ccosupv = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCOSUPV"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_AVANEXO"))))
-                    oBEDocdetcli.f6_avanexo = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_AVANEXO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_ACODANE"))))
-                    oBEDocdetcli.f6_acodane = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_ACODANE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NRETGAR"))))
-                    oBEDocdetcli.f6_nretgar = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NRETGAR"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CTIPDOC"))))
-                    oBEDocdetcli.f6_ctipdoc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CTIPDOC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CNRODOC"))))
-                    oBEDocdetcli.f6_cnrodoc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CNRODOC"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NTASRCN"))))
-                    oBEDocdetcli.f6_ntasrcn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NTASRCN"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NIMPRCN"))))
-                    oBEDocdetcli.f6_nimprcn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NIMPRCN"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CVANEXO"))))
-                    oBEDocdetcli.f6_cvanexo = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CVANEXO"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCODANE"))))
-                    oBEDocdetcli.f6_ccodane = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCODANE"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CCODAN2"))))
-                    oBEDocdetcli.f6_ccodan2 = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CCODAN2"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CVANEX2"))))
-                    oBEDocdetcli.f6_cvanex2 = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CVANEX2"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORCM1"))))
-                    oBEDocdetcli.f6_nporcm1 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORCM1"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NPORCM2"))))
-                    oBEDocdetcli.f6_nporcm2 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NPORCM2"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_CISCTIP"))))
-                    oBEDocdetcli.f6_cisctip = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("F6_CISCTIP"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NISCMON"))))
-                    oBEDocdetcli.f6_niscmon = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NISCMON"));
-                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("F6_NISCPRE"))))
-                    oBEDocdetcli.f6_niscpre = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("F6_NISCPRE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODSUC"))))
+                    oBEDocdetcli.fa2_ccodsuc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODSUC"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CTIPDOC"))))
+                    oBEDocdetcli.fa2_ctipdoc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CTIPDOC"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CSERDOC"))))
+                    oBEDocdetcli.fa2_cserdoc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CSERDOC"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CNUMDOC"))))
+                    oBEDocdetcli.fa2_cnumdoc = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CNUMDOC"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CITEM"))))
+                    oBEDocdetcli.fa2_citem = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CITEM"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODART"))))
+                    oBEDocdetcli.fa2_ccodart = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODART"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CNOMART"))))
+                    oBEDocdetcli.fa2_cnomart = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CNOMART"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CUNIART"))))
+                    oBEDocdetcli.fa2_cuniart = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CUNIART"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCANTID"))))
+                    oBEDocdetcli.fa2_ncantid = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCANTID"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPRECIO"))))
+                    oBEDocdetcli.fa2_nprecio = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPRECIO"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPREUNI"))))
+                    oBEDocdetcli.fa2_npreuni = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPREUNI"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPRUNMN"))))
+                    oBEDocdetcli.fa2_nprunmn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPRUNMN"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPRUNUS"))))
+                    oBEDocdetcli.fa2_nprunus = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPRUNUS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPRSIGV"))))
+                    oBEDocdetcli.fa2_nprsigv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPRSIGV"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODALM"))))
+                    oBEDocdetcli.fa2_ccodalm = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODALM"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODMON"))))
+                    oBEDocdetcli.fa2_ccodmon = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODMON"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NTIPCAM"))))
+                    oBEDocdetcli.fa2_ntipcam = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NTIPCAM"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPORDE1"))))
+                    oBEDocdetcli.fa2_nporde1 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPORDE1"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPDE1"))))
+                    oBEDocdetcli.fa2_nimpde1 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPDE1"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPORDE2"))))
+                    oBEDocdetcli.fa2_nporde2 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPORDE2"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPDE2"))))
+                    oBEDocdetcli.fa2_nimpde2 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPDE2"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPORDE3"))))
+                    oBEDocdetcli.fa2_nporde3 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPORDE3"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPDE3"))))
+                    oBEDocdetcli.fa2_nimpde3 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPDE3"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NTOTDES"))))
+                    oBEDocdetcli.fa2_ntotdes = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NTOTDES"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPORIGV"))))
+                    oBEDocdetcli.fa2_nporigv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPORIGV"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPIGV"))))
+                    oBEDocdetcli.fa2_nimpigv = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPIGV"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPORT"))))
+                    oBEDocdetcli.fa2_nimport = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPORT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPOMN"))))
+                    oBEDocdetcli.fa2_nimpomn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPOMN"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPOUS"))))
+                    oBEDocdetcli.fa2_nimpous = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPOUS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIIGVMN"))))
+                    oBEDocdetcli.fa2_niigvmn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIIGVMN"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIIGVUS"))))
+                    oBEDocdetcli.fa2_niigvus = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIIGVUS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CSTOCK"))))
+                    oBEDocdetcli.fa2_cstock = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CSTOCK"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CESTADO"))))
+                    oBEDocdetcli.fa2_cestado = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CESTADO"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CUSUCRE"))))
+                    oBEDocdetcli.fa2_cusucre = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CUSUCRE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_DFECCRE"))))
+                    oBEDocdetcli.fa2_dfeccre = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_DFECCRE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CUSUMOD"))))
+                    oBEDocdetcli.fa2_cusumod = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CUSUMOD"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_DFECMOD"))))
+                    oBEDocdetcli.fa2_dfecmod = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_DFECMOD"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCOSTMN"))))
+                    oBEDocdetcli.fa2_ncostmn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCOSTMN"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCOSTUS"))))
+                    oBEDocdetcli.fa2_ncostus = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCOSTUS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCANATE"))))
+                    oBEDocdetcli.fa2_ncanate = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCANATE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CDOCATE"))))
+                    oBEDocdetcli.fa2_cdocate = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CDOCATE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CSUCATE"))))
+                    oBEDocdetcli.fa2_csucate = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CSUCATE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CNUMATE"))))
+                    oBEDocdetcli.fa2_cnumate = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CNUMATE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CFLAKIT"))))
+                    oBEDocdetcli.fa2_cflakit = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CFLAKIT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODCAJ"))))
+                    oBEDocdetcli.fa2_ccodcaj = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODCAJ"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPORPER"))))
+                    oBEDocdetcli.fa2_nporper = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPORPER"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPPER"))))
+                    oBEDocdetcli.fa2_nimpper = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPPER"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPERCMN"))))
+                    oBEDocdetcli.fa2_npercmn = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPERCMN"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPERCUS"))))
+                    oBEDocdetcli.fa2_npercus = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPERCUS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODAR2"))))
+                    oBEDocdetcli.fa2_ccodar2 = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODAR2"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CALMREF"))))
+                    oBEDocdetcli.fa2_calmref = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CALMREF"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CFLAATE"))))
+                    oBEDocdetcli.fa2_cflaate = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CFLAATE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPESART"))))
+                    oBEDocdetcli.fa2_npesart = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPESART"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("EXISTE"))))
+                    oBEDocdetcli.existe = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("EXISTE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("NUEVO"))))
+                    oBEDocdetcli.nuevo = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("NUEVO"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCANBUL"))))
+                    oBEDocdetcli.fa2_ncanbul = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCANBUL"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPESBUL"))))
+                    oBEDocdetcli.fa2_npesbul = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPESBUL"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCANTI2"))))
+                    oBEDocdetcli.fa2_ncanti2 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCANTI2"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCANTI3"))))
+                    oBEDocdetcli.fa2_ncanti3 = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCANTI3"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCANOBS"))))
+                    oBEDocdetcli.fa2_ncanobs = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCANOBS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPREOBS"))))
+                    oBEDocdetcli.fa2_npreobs = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPREOBS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NIMPOBS"))))
+                    oBEDocdetcli.fa2_nimpobs = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NIMPOBS"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NCAXPRE"))))
+                    oBEDocdetcli.fa2_ncaxpre = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NCAXPRE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_NPRXPRE"))))
+                    oBEDocdetcli.fa2_nprxpre = dr_clidocdet.GetDecimal(dr_clidocdet.GetOrdinal("FA2_NPRXPRE"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CSUCANT"))))
+                    oBEDocdetcli.fa2_csucant = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CSUCANT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CDOCANT"))))
+                    oBEDocdetcli.fa2_cdocant = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CDOCANT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CSERANT"))))
+                    oBEDocdetcli.fa2_cserant = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CSERANT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CNUMANT"))))
+                    oBEDocdetcli.fa2_cnumant = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CNUMANT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CDATADI"))))
+                    oBEDocdetcli.fa2_cdatadi = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CDATADI"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CITEFAC"))))
+                    oBEDocdetcli.fa2_citefac = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CITEFAC"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CCODACT"))))
+                    oBEDocdetcli.fa2_ccodact = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CCODACT"));
+                if ((!dr_clidocdet.IsDBNull(dr_clidocdet.GetOrdinal("FA2_CSITACT"))))
+                    oBEDocdetcli.fa2_csitact = dr_clidocdet.GetString(dr_clidocdet.GetOrdinal("FA2_CSITACT"));
                 oListBEDocdetcli.Add(oBEDocdetcli);
             }
             dr_clidocdet.Close();

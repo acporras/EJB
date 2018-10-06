@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FE.InterfaceConsole.exe" size="70112">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FE.InterfaceConsole.exe" size="67040">
       <assemblyIdentity name="FE.InterfaceConsole" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+d71WA0QgIQ1s7wHC0IEILbGoC8ghkruvYa8pEzT0CE=</dsig:DigestValue>
+        <dsig:DigestValue>Cfg4lLaxj+7unRVFtDFQCA75nBDHvDvaqtu48GbcXdk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -65,13 +65,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="FE.InterfaceConsole.exe.config" size="445">
+  <file name="FE.InterfaceConsole.exe.config" size="446">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>avruOlxjvrnje6hIAUvLFsL6VDTUCNhK4yDfxco6XTI=</dsig:DigestValue>
+      <dsig:DigestValue>lSkvuDr89zrk2M5XAElWbCjjZAratyrlcNJT0DSaxXo=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
