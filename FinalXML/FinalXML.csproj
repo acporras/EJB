@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\SQLite.3.13.0\build\net45\SQLite.props" Condition="Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE366CE3-4F31-48DF-87C0-39525FCCAF44}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FinalXML</RootNamespace>
+    <AssemblyName>FinalXML</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>servp.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.2.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Design">
+      <HintPath>C:\Users\Usuario\Desktop\openinvoiceperu-develop-OK\OpenInvoicePeru\artifacts\ComponentFactory.Krypton.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Docking">
+      <HintPath>C:\Users\Usuario\Desktop\openinvoiceperu-develop-OK\OpenInvoicePeru\artifacts\ComponentFactory.Krypton.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Navigator">
+      <HintPath>C:\Users\Usuario\Desktop\openinvoiceperu-develop-OK\OpenInvoicePeru\artifacts\ComponentFactory.Krypton.Navigator.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Ribbon">
+      <HintPath>C:\Users\Usuario\Desktop\openinvoiceperu-develop-OK\OpenInvoicePeru\artifacts\ComponentFactory.Krypton.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.4.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Usuario\Desktop\openinvoiceperu-develop-OK\OpenInvoicePeru\artifacts\ComponentFactory.Krypton.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Workspace">
+      <HintPath>C:\Users\Usuario\Desktop\openinvoiceperu-develop-OK\OpenInvoicePeru\artifacts\ComponentFactory.Krypton.Workspace.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.DotNetBar2, Version=12.0.0.1, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="Gma.QrCodeNet.Encoding">
+      <HintPath>bin\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Sqlite, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Sqlite.1.0.0\lib\net451\Microsoft.Data.Sqlite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Services3.3.0.0.0\lib\net20\Microsoft.Web.Services3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Portable.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f21be3d5ccff8cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable-Strong.DataAnnotations.1.0.1\lib\net45\Portable.DataAnnotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLite.CodeFirst, Version=1.2.4.16, Culture=neutral, PublicKeyToken=eb96ba0a78d831a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLite.CodeFirst.1.2.4.16\lib\net45\SQLite.CodeFirst.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net46\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.103\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.2.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.0.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.0.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.1.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Tesseract, Version=3.0.2.0, Culture=neutral, PublicKeyToken=ebeb3d86bef60cbe, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tesseract.3.0.2.0\lib\net451\Tesseract.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WinFormAnimation, Version=1.5.6298.3372, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinFormAnimation.1.5.6298.3372\lib\net35-client\WinFormAnimation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administradores\clsAdmCargaVentas.cs" />
+    <Compile Include="Administradores\clsAdmEmpresa.cs" />
+    <Compile Include="Administradores\clsAdmNumeracion.cs" />
+    <Compile Include="Administradores\clsAdmPedido.cs" />
+    <Compile Include="Conexion\clsConexionMysql.cs" />
+    <Compile Include="Entidades\clsEmpresa.cs" />
+    <Compile Include="Entidades\clsCargaVentas.cs" />
+    <Compile Include="Entidades\clsDetallePedido.cs" />
+    <Compile Include="Entidades\clsNumeracion.cs" />
+    <Compile Include="Entidades\clsPedido.cs" />
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\ClsDatosReportes.cs" />
+    <Compile Include="Informes\Erwin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\Erwin.Designer.cs">
+      <DependentUpon>Erwin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmBoletas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmBoletas.Designer.cs">
+      <DependentUpon>FrmBoletas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmFactura.Designer.cs">
+      <DependentUpon>FrmFactura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmFactura2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmFactura2.Designer.cs">
+      <DependentUpon>FrmFactura2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmNC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmNC.Designer.cs">
+      <DependentUpon>FrmNC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmND.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmND.Designer.cs">
+      <DependentUpon>FrmND.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmPedido.Designer.cs">
+      <DependentUpon>FrmPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmRetencion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmRetencion.Designer.cs">
+      <DependentUpon>FrmRetencion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmTFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmTFactura.Designer.cs">
+      <DependentUpon>FrmTFactura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\FrmTTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Informes\FrmTTicket.Designer.cs">
+      <DependentUpon>FrmTTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\ICargaVentas.cs" />
+    <Compile Include="Interfaces\IEmpresa.cs" />
+    <Compile Include="Interfaces\INumeracion.cs" />
+    <Compile Include="Interfaces\IPedido.cs" />
+    <Compile Include="InterMySql\MysqlCargaVentas.cs" />
+    <Compile Include="InterMySql\MysqlEmpresa.cs" />
+    <Compile Include="InterMySql\MysqlNumeracion.cs" />
+    <Compile Include="InterMySql\MysqlPedido.cs" />
+    <Compile Include="Modelos\AdditionalInformation.cs" />
+    <Compile Include="Modelos\AdditionalMonetaryTotal.cs" />
+    <Compile Include="Modelos\AdditionalProperty.cs" />
+    <Compile Include="Modelos\ConexionSunat.cs" />
+    <Compile Include="Modelos\ConsultarTicket.cs" />
+    <Compile Include="Modelos\Contenido.cs" />
+    <Compile Include="Modelos\Conversion.cs" />
+    <Compile Include="Modelos\Convertir.cs" />
+    <Compile Include="Modelos\con_NumLetraC.cs" />
+    <Compile Include="Modelos\CreditNote.cs" />
+    <Compile Include="Modelos\DebitNote.cs" />
+    <Compile Include="Modelos\DireccionSunat.cs" />
+    <Compile Include="Modelos\DocumentoElectronico.cs" />
+    <Compile Include="Modelos\EnviarDocumentoController.cs" />
+    <Compile Include="Modelos\EnviarDocumentoRequest.cs" />
+    <Compile Include="Modelos\EnviarDocumentoResponse.cs" />
+    <Compile Include="Modelos\EnviarResumenController.cs" />
+    <Compile Include="Modelos\EnviarResumenResponse.cs" />
+    <Compile Include="Modelos\EnvioDocumentoComun.cs" />
+    <Compile Include="Modelos\EspacioNombres.cs" />
+    <Compile Include="Modelos\ExchangeRate.cs" />
+    <Compile Include="Modelos\Exportacion.cs" />
+    <Compile Include="Modelos\FirmadoRequest.cs" />
+    <Compile Include="Modelos\FirmadoResponse.cs" />
+    <Compile Include="Modelos\FirmarController.cs" />
+    <Compile Include="Modelos\GeneradorXML.cs" />
+    <Compile Include="Modelos\Herramientas.cs" />
+    <Compile Include="Modelos\Invoice.cs" />
+    <Compile Include="Modelos\PasswordDigestBehavior.cs" />
+    <Compile Include="Modelos\PasswordDigestMessageInspector.cs" />
+    <Compile Include="Modelos\PayableAmount.cs" />
+    <Compile Include="Modelos\Payment.cs" />
+    <Compile Include="Modelos\RespuestaComun.cs" />
+    <Compile Include="Modelos\Respuestas.cs" />
+    <Compile Include="Modelos\Retention.cs" />
+    <Compile Include="Modelos\Serializador.cs" />
+    <Compile Include="Modelos\SummaryDocuments.cs" />
+    <Compile Include="Modelos\SummaryDocumentsLine.cs" />
+    <Compile Include="Modelos\SUNATRetentionDocumentReference.cs" />
+    <Compile Include="Modelos\SUNATRetentionInformation.cs" />
+    <Compile Include="Modelos\Utiles.cs" />
+    <Compile Include="Modelos\VoidedDocuments.cs" />
+    <Compile Include="Modelos\VoidedDocumentsLine.cs" />
+    <Compile Include="OpenInvoicePeruDb.cs" />
+    <Compile Include="OpenInvoicePeruDbInitializer.cs" />
+    <Compile Include="PlantillaBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlantillaBase.Designer.cs">
+      <DependentUpon>PlantillaBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reniec.cs" />
+    <Compile Include="Service References\Sunat\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="SunatRuc.cs" />
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\DTBoletas.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\DTFactura.rdlc" />
+    <EmbeddedResource Include="Informes\DTFactura2.rdlc" />
+    <EmbeddedResource Include="Informes\DTNC.rdlc" />
+    <EmbeddedResource Include="Informes\DTND.rdlc" />
+    <EmbeddedResource Include="Informes\DTPedido.rdlc" />
+    <EmbeddedResource Include="Informes\DTRetencion.rdlc" />
+    <EmbeddedResource Include="Informes\Erwin.resx">
+      <DependentUpon>Erwin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmBoletas.resx">
+      <DependentUpon>FrmBoletas.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmFactura.resx">
+      <DependentUpon>FrmFactura.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmFactura2.resx">
+      <DependentUpon>FrmFactura2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmNC.resx">
+      <DependentUpon>FrmNC.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmND.resx">
+      <DependentUpon>FrmND.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmPedido.resx">
+      <DependentUpon>FrmPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmRetencion.resx">
+      <DependentUpon>FrmRetencion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmTFactura.resx">
+      <DependentUpon>FrmTFactura.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FrmTTicket.resx">
+      <DependentUpon>FrmTTicket.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\Report1.rdlc" />
+    <EmbeddedResource Include="Informes\TFactura.rdlc" />
+    <EmbeddedResource Include="Informes\TTicket.rdlc" />
+    <EmbeddedResource Include="PlantillaBase.resx">
+      <DependentUpon>PlantillaBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\clsConexionMysql.datasource" />
+    <None Include="Properties\DataSources\ClsDatosReportes.datasource" />
+    <None Include="Properties\DataSources\Contribuyente.datasource" />
+    <None Include="Properties\DataSources\DetalleDocumento.datasource" />
+    <None Include="Properties\DataSources\DocumentoElectronico.datasource" />
+    <None Include="Properties\DataSources\DocumentoRetencion.datasource" />
+    <None Include="Properties\DataSources\FinalXML.Entidades.clsDetallePedido.datasource" />
+    <None Include="Properties\DataSources\FinalXML.Entidades.clsPedido.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="tessdata\eng.cube.bigrams" />
+    <None Include="tessdata\eng.cube.fold" />
+    <None Include="tessdata\eng.cube.lm" />
+    <None Include="tessdata\eng.cube.nn" />
+    <None Include="tessdata\eng.cube.params" />
+    <None Include="tessdata\eng.cube.size" />
+    <None Include="tessdata\eng.cube.word-freq" />
+    <None Include="tessdata\eng.tesseract_cube.nn" />
+    <None Include="tessdata\eng.traineddata" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\DireccionesSunat.txt" />
+    <Content Include="Data\ModalidadTransportes.txt" />
+    <Content Include="Data\Monedas.txt" />
+    <Content Include="Data\TipoDatoAdicionales.txt" />
+    <Content Include="Data\TipoDiscrepancias.txt" />
+    <Content Include="Data\TipoDocumentoAnticipos.txt" />
+    <Content Include="Data\TipoDocumentoContribuyentes.txt" />
+    <Content Include="Data\TipoDocumentoRelacionados.txt" />
+    <Content Include="Data\TipoDocumentos.txt" />
+    <Content Include="Data\TipoImpuestos.txt" />
+    <Content Include="Data\TipoOperaciones.txt" />
+    <Content Include="Data\TipoPrecios.txt" />
+    <Content Include="Ionic.Zip.xml" />
+    <Content Include="modeloConfigSUNAT.xml" />
+    <Content Include="servp.ico" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\liblept172.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\libtesseract304.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\liblept172.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\libtesseract304.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources2\UI-11-24.png" />
+    <None Include="Resources2\UI-11-32.png" />
+    <None Include="Resources2\reten.png" />
+    <None Include="Resources2\pdfs-20.png" />
+    <None Include="Resources2\lc_contratistas.JPG" />
+    <None Include="Resources2\view-icon-tm-16.png" />
+    <None Include="Resources2\view-icon-tm-20.png" />
+    <None Include="Resources\Icon1.ico" />
+    <None Include="Resources\Image1.png" />
+    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources2\123-24.png" />
+    <None Include="Resources2\examine-24.png" />
+    <None Include="Resources2\ok.png" />
+    <None Include="Resources2\new.png" />
+    <None Include="Resources2\iconxml.png" />
+    <None Include="Resources2\iconcopy.png" />
+    <None Include="Resources2\file_Exel_download-16.png" />
+    <None Include="Resources2\examine-16.png" />
+    <None Include="Resources2\delete.png" />
+    <None Include="Resources2\cancel.png" />
+    <None Include="Resources2\199-20.png" />
+    <None Include="Resources2\199-16.png" />
+    <None Include="Resources2\142_xml_export-20.png" />
+    <None Include="Resources2\142_xml_export-16.png" />
+    <None Include="Service References\Sunat\billService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Sunat\billService3.wsdl" />
+    <None Include="Service References\Sunat\billService31.wsdl" />
+    <None Include="Service References\Sunat\FinalXML.Sunat.getStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Sunat\FinalXML.Sunat.sendBillResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Sunat\FinalXML.Sunat.sendSummaryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Sunat\FinalXML.Sunat.statusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Sunat\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Sunat\configuration.svcinfo" />
+    <None Include="Service References\Sunat\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Sunat\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLite.3.13.0\build\net45\SQLite.props'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

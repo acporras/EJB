@@ -1,0 +1,12 @@
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\bin\Debug\FE.InterfaceConsole.exe.config
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\bin\Debug\FE.InterfaceConsole.exe.manifest
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\bin\Debug\FE.InterfaceConsole.application
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\bin\Debug\FE.InterfaceConsole.exe
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\bin\Debug\FE.InterfaceConsole.pdb
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\bin\Debug\MySql.Data.dll
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\obj\Debug\FE.InterfaceConsole.csproj.CoreCompileInputs.cache
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\obj\Debug\FE.InterfaceConsole.exe.manifest
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\obj\Debug\FE.InterfaceConsole.application
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\obj\Debug\FE.InterfaceConsole.csproj.CopyComplete
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\obj\Debug\FE.InterfaceConsole.exe
+C:\Users\dark_\Documents\FE\INTEROCEANICA\FE.InterfaceConsole\obj\Debug\FE.InterfaceConsole.pdb

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ext:UBLExtensions>
+    <ext:UBLExtension>
+      <ext:ExtensionContent>
+        <sac:AdditionalInformation>
+          <sac:AdditionalMonetaryTotal>
+            <cbc:ID>1001</cbc:ID>
+            <cbc:PayableAmount currencyID="PEN">0.85</cbc:PayableAmount>
+          </sac:AdditionalMonetaryTotal>
+          <sac:AdditionalMonetaryTotal>
+            <cbc:ID>1002</cbc:ID>
+            <cbc:PayableAmount currencyID="PEN">0.00</cbc:PayableAmount>
+          </sac:AdditionalMonetaryTotal>
+          <sac:AdditionalMonetaryTotal>
+            <cbc:ID>1003</cbc:ID>
+            <cbc:PayableAmount currencyID="PEN">0.00</cbc:PayableAmount>
+          </sac:AdditionalMonetaryTotal>
+          <sac:AdditionalMonetaryTotal>
+            <cbc:ID>1004</cbc:ID>
+            <cbc:PayableAmount currencyID="PEN">0.00</cbc:PayableAmount>
+          </sac:AdditionalMonetaryTotal>
+          <sac:AdditionalProperty>
+            <cbc:ID>1000</cbc:ID>
+            <cbc:Value>UNO Y  00 /100</cbc:Value>
+          </sac:AdditionalProperty>
+          <sac:SUNATTransaction>
+            <cbc:ID>01</cbc:ID>
+          </sac:SUNATTransaction>
+        </sac:AdditionalInformation>
+      </ext:ExtensionContent>
+    </ext:UBLExtension>
+    <ext:UBLExtension>
+      <ext:ExtensionContent><Signature Id="STONER" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>rmkY+Brhrn5+H6NVVHc3AED3T4w=</DigestValue></Reference></SignedInfo><SignatureValue>Q0jlSfydsFFML6GOrMvwrzWMdv4tG4BHrOU19X0pElrCLcmu9HBilH8UbHjs5D4LVw453n2WUdJ935K7rp5bCnSgnFSolYrYaO9Mnd+CI8HVsrVXRiA0nVcxTPOiU+S8qMBs3pID2XGGStTXjQwG+aOhTSmHa1lhcmp1IK9ou0x0UkO4fY+LcQNnRSMtm6P7dBIFUjs0UzLQ2XAlnXvawjlRN4tTQ3BrG944T2j/o/Edgk31RYC2W8woRF1hTZ0AVGi0ugsb1+k2Le44lf4GyRbEoEbl5tA36lyI83SdNuq+mgWWiNFtDO4/qcg7kyeHp/ck+RoSld9I4qiTws+1xQ==</SignatureValue><KeyInfo><X509Data><X509SubjectName>C=PE, CN=AYDEE PEREZ SANCHEZ, G=AYDEE, SN=PEREZ SANCHEZ, T=GERENTE GENERAL, OU=20513258934, OU=GERENCIA, O=TRANSPORTES INTEROCEANICA S.A.C., OID.1.3.6.1.4.1.17326.30.4=DNI, OID.1.3.6.1.4.1.17326.30.3=20513258934, OID.1.3.6.1.4.1.17326.30.2=RUC, SERIALNUMBER=10504447, S=LIMA-LIMA, L=ATE, E=j-bazan@perusistemas.org</X509SubjectName><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent>
+    </ext:UBLExtension>
+  </ext:UBLExtensions>
+  <cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+  <cbc:CustomizationID>1.0</cbc:CustomizationID>
+  <cbc:ID>BE01-00000232</cbc:ID>
+  <cbc:IssueDate>2018-01-01</cbc:IssueDate>
+  <cbc:InvoiceTypeCode>03</cbc:InvoiceTypeCode>
+  <cbc:DocumentCurrencyCode>PEN</cbc:DocumentCurrencyCode>
+  <cac:Signature>
+    <cbc:ID>BE01-00000232</cbc:ID>
+    <cac:SignatoryParty>
+      <cac:PartyIdentification>
+        <cbc:ID>20545756022</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>INVERSIONES INKA?S PALACE S.A.C.</cbc:Name>
+      </cac:PartyName>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      <cac:ExternalReference>
+        <cbc:URI>20545756022-BE01-00000232</cbc:URI>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+  </cac:Signature>
+  <cac:AccountingSupplierParty>
+    <cbc:CustomerAssignedAccountID>20545756022</cbc:CustomerAssignedAccountID>
+    <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name><![CDATA[INVERSIONES INKA?S PALACE S.A.C.]]></cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:ID>150101</cbc:ID>
+        <cbc:StreetName>CAL. MANUEL DEL PINO NRO. 116 URB. - SANTA BEATRIZ</cbc:StreetName>
+        <cbc:CityName>Lima</cbc:CityName>
+        <cbc:CountrySubentity>Lima</cbc:CountrySubentity>
+        <cbc:District>Lima</cbc:District>
+        <cac:Country>
+          <cbc:IdentificationCode>PE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName><![CDATA[INVERSIONES INKA?S PALACE S.A.C.]]></cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cbc:CustomerAssignedAccountID>20101884407</cbc:CustomerAssignedAccountID>
+    <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName><![CDATA[E.REYNA C.S.A.C.CONTRATISTAS GENERALES]]></cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="PEN">0.15</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxAmount currencyID="PEN">0.15</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cac:TaxScheme>
+          <cbc:ID>1000</cbc:ID>
+          <cbc:Name>IGV</cbc:Name>
+          <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:PayableAmount currencyID="PEN">1.00</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="NIU">1.00</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="PEN">0.85</cbc:LineExtensionAmount>
+    <cac:PricingReference>
+      <cac:AlternativeConditionPrice>
+        <cbc:PriceAmount currencyID="PEN">0.00</cbc:PriceAmount>
+        <cbc:PriceTypeCode>01</cbc:PriceTypeCode>
+      </cac:AlternativeConditionPrice>
+    </cac:PricingReference>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.15</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.15</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cbc:TaxExemptionReasonCode>10</cbc:TaxExemptionReasonCode>
+          <cac:TaxScheme>
+            <cbc:ID>1000</cbc:ID>
+            <cbc:Name>IGV</cbc:Name>
+            <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:Item>
+      <cbc:Description>ALQUILER DE TANQUE MOVIL - INTERNACIONAL</cbc:Description>
+      <cac:SellersItemIdentification>
+        <cbc:ID>1012                     </cbc:ID>
+      </cac:SellersItemIdentification>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="PEN">0.85</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>

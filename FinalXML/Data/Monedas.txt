@@ -1,0 +1,3 @@
+﻿PEN|Soles
+USD|Dólares Americanos
+EUR|Euro
