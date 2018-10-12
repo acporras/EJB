@@ -10,6 +10,7 @@ using FinalXML.Interfaces;
 using FinalXML.Conexion;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace FinalXML.InterMySql
 {
@@ -24,9 +25,9 @@ namespace FinalXML.InterMySql
         {
             try
             {
-                string consulta = @"UPDATE INT_DOCELECAB SET F5_COD_ESTADO_SUNAT=@CodEstado, F5_MENSAJE_SUNAT=@MensajeSunat,F5_ESTADO_ENVIO=@EstadoEnv,F5_XML=@Xml ,F5_CDR=@Cdr,F5_PDF=@Pdf
+                string consulta = @"UPDATE INT_DOCELECAB SET FA1_COD_ESTADO_SUNAT=@CodEstado, FA1_MENSAJE_SUNAT=@MensajeSunat,FA1_ESTADO_ENVIO=@EstadoEnv,FA1_XML=@Xml ,FA1_CDR=@Cdr,FA1_PDF=@Pdf
                                     FROM INT_DOCELECAB 
-                                   WHERE F5_CRUCEMI = @NumRuc AND F5_CTD=@Sigla AND F5_CNUMSER=@Serie AND F5_CNUMDOC=@Numeracion";
+                                   WHERE FA1_CRUCEMI = @NumRuc AND FA1_CTIPDOC=@Sigla AND FA1_CSERDOC=@Serie AND FA1_CNUMDOC=@Numeracion";
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
                 cmd.CommandType = CommandType.Text;
@@ -62,11 +63,11 @@ namespace FinalXML.InterMySql
         {
             try
             {
-               string consulta = @"SELECT F5_CTD,F5_CNUMSER,F5_CNUMDOC,CONCAT(F5_CTD,F5_CNUMSER,F5_CNUMDOC) AS NUMDOC,
-                                    F5_CCODCLI,F5_CNOMBRE,F5_CDIRECC,F5_DFECDOC,F5_NIMPORT,F5_COD_ESTADO_SUNAT,
-                                    F5_MENSAJE_SUNAT, (CASE F5_ESTADO_ENVIO WHEN 0 THEN " + "'POR ENVIAR'" + " WHEN 1 THEN " +"'RECHAZADO'" + " WHEN 2 THEN " + "'PENDIENTE'" + " WHEN 3 THEN " + "'ACEPTADA'" + " WHEN 4 THEN " + "'ANULADO'" + " END ) AS ESTADO_ENVIO,F5_XML,F5_CDR,F5_PDF " +
+               string consulta = @"SELECT FA1_CTIPDOC,FA1_CSERDOC,FA1_CNUMDOC,CONCAT(FA1_CTIPDOC,FA1_CSERDOC,FA1_CNUMDOC) AS NUMDOC,
+                                    FA1_CCODCLI,FA1_CNOMCLI,FA1_CDIRCLI,FA1_DFECDOC,FA1_NIMPORT,FA1_COD_ESTADO_SUNAT,
+                                    FA1_MENSAJE_SUNAT, (CASE ISNULL(FA1_ESTADO_ENVIO,0) WHEN 0 THEN " + "'POR ENVIAR'" + " WHEN 1 THEN " +"'RECHAZADO'" + " WHEN 2 THEN " + "'PENDIENTE'" + " WHEN 3 THEN " + "'ACEPTADA'" + " WHEN 4 THEN " + "'ANULADO'" + " END ) AS ESTADO_ENVIO,FA1_XML,FA1_CDR,FA1_PDF " +
                                     "FROM INT_DOCELECAB "+
-                                    "WHERE F5_DFECDOC BETWEEN @desde AND @hasta ORDER BY F5_CNUMDOC DESC";
+                                    "WHERE FA1_DFECDOC BETWEEN @desde AND @hasta ORDER BY FA1_CNUMDOC DESC";
 
                 tabla = new DataTable();
                 con.conectarBD();
@@ -90,11 +91,11 @@ namespace FinalXML.InterMySql
         {
             try
             {
-                string consulta = @"SELECT F5_CTD,F5_CNUMSER,F5_CNUMDOC,CONCAT(F5_CTD,F5_CNUMSER,F5_CNUMDOC) AS NUMDOC,
-                                    F5_CCODCLI,F5_CNOMBRE,F5_CDIRECC,F5_DFECDOC,F5_NIMPORT,F5_COD_ESTADO_SUNAT,
-                                    F5_MENSAJE_SUNAT, (CASE F5_ESTADO_ENVIO WHEN 0 THEN " + "'POR ENVIAR'" + " WHEN 1 THEN " + "'RECHAZADO'" + " WHEN 2 THEN " + "'PENDIENTE'" + " WHEN 3 THEN " + "'ACEPTADA'" + " WHEN 4 THEN " + "'ANULADO'" + " END ) AS ESTADO_ENVIO,F5_XML,F5_CDR,F5_PDF " +
+                string consulta = @"SELECT FA1_CTIPDOC,FA1_CSERDOC,FA1_CNUMDOC,CONCAT(FA1_CTIPDOC,FA1_CSERDOC,FA1_CNUMDOC) AS NUMDOC,
+                                    FA1_CCODCLI,FA1_CNOMCLI,FA1_CDIRCLI,FA1_DFECDOC,FA1_NIMPORT,FA1_COD_ESTADO_SUNAT,
+                                    FA1_MENSAJE_SUNAT, (CASE ISNULL(FA1_ESTADO_ENVIO,0) WHEN 0 THEN " + "'POR ENVIAR'" + " WHEN 1 THEN " + "'RECHAZADO'" + " WHEN 2 THEN " + "'PENDIENTE'" + " WHEN 3 THEN " + "'ACEPTADA'" + " WHEN 4 THEN " + "'ANULADO'" + " END ) AS ESTADO_ENVIO,FA1_XML,FA1_CDR,FA1_PDF " +
                                      "FROM INT_DOCELECAB " +
-                                     "WHERE F5_CRUCEMI= @rucemi AND (@tipdoc = '' OR F5_CTD = @tipdoc) AND F5_DFECDOC BETWEEN @desde AND @hasta ORDER BY F5_CNUMDOC DESC";
+                                     "WHERE FA1_CRUCEMI= @rucemi AND (@tipdoc = '' OR FA1_CTIPDOC = @tipdoc) AND FA1_DFECDOC BETWEEN @desde AND @hasta ORDER BY FA1_CNUMDOC DESC";
 
                 tabla = new DataTable();
                 con.conectarBD();
@@ -119,11 +120,11 @@ namespace FinalXML.InterMySql
         {
             try
             {
-                string consulta = @"SELECT F5_CTD,F5_CNUMSER,F5_CNUMDOC,CONCAT(F5_CTD,F5_CNUMSER,F5_CNUMDOC) AS NUMDOC,
-                                    F5_CCODCLI,F5_CNOMBRE,F5_CDIRECC,F5_DFECDOC,F5_NIMPORT,F5_COD_ESTADO_SUNAT,
-                                    F5_MENSAJE_SUNAT, (CASE F5_ESTADO_ENVIO WHEN 0 THEN " + "'POR ENVIAR'" + " WHEN 1 THEN " + "'RECHAZADO'" + " WHEN 2 THEN " + "'PENDIENTE'" + " WHEN 3 THEN " + "'ACEPTADA'" + " WHEN 4 THEN " + "'ANULADO'" + " END ) AS ESTADO_ENVIO,F5_XML,F5_CDR,F5_PDF " +
+                string consulta = @"SELECT FA1_CTIPDOC,FA1_CSERDOC,FA1_CNUMDOC,CONCAT(FA1_CTIPDOC,FA1_CSERDOC,FA1_CNUMDOC) AS NUMDOC,
+                                    FA1_CCODCLI,FA1_CNOMCLI,FA1_CDIRCLI,FA1_DFECDOC,FA1_NIMPORT,FA1_COD_ESTADO_SUNAT,
+                                    FA1_MENSAJE_SUNAT, (CASE ISNULL(FA1_ESTADO_ENVIO,0) WHEN 0 THEN " + "'POR ENVIAR'" + " WHEN 1 THEN " + "'RECHAZADO'" + " WHEN 2 THEN " + "'PENDIENTE'" + " WHEN 3 THEN " + "'ACEPTADA'" + " WHEN 4 THEN " + "'ANULADO'" + " END ) AS ESTADO_ENVIO,FA1_XML,FA1_CDR,FA1_PDF " +
                                      "FROM INT_DOCELECAB " +
-                                     "WHERE F5_ESTADO_ENVIO = @estado AND F5_CRUCEMI= @rucemi AND (@tipdoc = '' OR F5_CTD = @tipdoc) AND F5_DFECDOC BETWEEN @desde AND @hasta ORDER BY F5_CNUMDOC DESC";
+                                     "WHERE ISNULL(FA1_ESTADO_ENVIO, 0) = @estado AND FA1_CRUCEMI= @rucemi AND (@tipdoc = '' OR FA1_CTIPDOC = @tipdoc) AND FA1_DFECDOC BETWEEN @desde AND @hasta ORDER BY FA1_CNUMDOC DESC";
 
                 tabla = new DataTable();
                 con.conectarBD();
@@ -150,7 +151,7 @@ namespace FinalXML.InterMySql
             clsCargaVentas ven = null;
             try
             {
-                string consulta = @"SELECT * FROM INT_DOCELECAB WHERE F5_CTD=@Sigla AND F5_CNUMSER=@Serie AND F5_CNUMDOC=@Numeracion  ";
+                string consulta = @"SELECT * FROM INT_DOCELECAB WHERE FA1_CTIPDOC=@Sigla AND FA1_CSERDOC=@Serie AND FA1_CNUMDOC=@Numeracion  ";
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
                 cmd.Parameters.AddWithValue("@Sigla", Sigla);
@@ -180,15 +181,17 @@ namespace FinalXML.InterMySql
                         ven.Sigla = dr.GetString(2);
                         ven.Serie = dr.GetString(3);
                         ven.Numeracion = dr.GetString(4);
-                        ven.FechaEmision = dr.GetDateTime(6);
-                        ven.NumDocCliente = dr.GetString(11);
-                        ven.Cliente = dr.GetString(12);
-                        ven.DirCliente = dr.GetString(13);
-                        ven.SiglaDocAfecta = dr.GetString(24);
-                        ven.SerieDocAfecta = dr.GetString(25);
-                        ven.NumDocAfecta = dr.GetString(26);
-                        ven.Moneda = dr.GetString(17);
-                        ven.FechaVencimiento = dr.GetDateTime(7);
+                        ven.FechaEmision = DateTime.ParseExact(dr.GetString(5), "yyyyMMdd",
+                            CultureInfo.InvariantCulture);
+                        ven.NumDocCliente = dr.GetString(9);
+                        ven.Cliente = dr.GetString(8);
+                        ven.DirCliente = dr.GetString(10);
+                        ven.SiglaDocAfecta = dr.GetString(14);
+                        ven.SerieDocAfecta = dr.GetString(15);
+                        ven.NumDocAfecta = dr.GetString(16);
+                        ven.Moneda = dr.GetString(24);
+                        ven.FechaVencimiento = DateTime.ParseExact(dr.GetString(6), "yyyyMMdd",
+                            CultureInfo.InvariantCulture);
                     }
 
                 }
@@ -207,7 +210,7 @@ namespace FinalXML.InterMySql
             clsCargaVentas ven = null;
             try
             {
-                string consulta = @"SELECT * FROM INT_DOCELECAB WHERE F5_CRUCEMI=@numruc AND F5_CTD=@Sigla AND F5_CNUMSER=@Serie AND F5_CNUMDOC=@Numeracion  ";
+                string consulta = @"SELECT * FROM INT_DOCELECAB WHERE FA1_CRUCEMI=@numruc AND FA1_CTIPDOC=@Sigla AND FA1_CSERDOC=@Serie AND FA1_CNUMDOC=@Numeracion  ";
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
                 cmd.Parameters.AddWithValue("@numruc", NumRuc);
@@ -224,15 +227,17 @@ namespace FinalXML.InterMySql
                         ven.Sigla = dr.GetString(2);
                         ven.Serie = dr.GetString(3);
                         ven.Numeracion = dr.GetString(4);
-                        ven.FechaEmision = dr.GetDateTime(6);
-                        ven.NumDocCliente = dr.GetString(11);
-                        ven.Cliente = dr.GetString(12);
-                        ven.DirCliente = dr.GetString(13);
-                        ven.SiglaDocAfecta = dr.GetString(24);
-                        ven.SerieDocAfecta = dr.GetString(25);
-                        ven.NumDocAfecta = dr.GetString(26);
-                        ven.Moneda = dr.GetString(17);
-                        ven.FechaVencimiento = dr.GetDateTime(7);
+                        ven.FechaEmision = DateTime.ParseExact(dr.GetString(5), "yyyyMMdd",
+                            CultureInfo.InvariantCulture);
+                        ven.NumDocCliente = dr.GetString(9);
+                        ven.Cliente = dr.GetString(8);
+                        ven.DirCliente = dr.GetString(10);
+                        ven.SiglaDocAfecta = dr.GetString(14);
+                        ven.SerieDocAfecta = dr.GetString(15);
+                        ven.NumDocAfecta = dr.GetString(16);
+                        ven.Moneda = dr.GetString(24);
+                        ven.FechaVencimiento = DateTime.ParseExact(dr.GetString(6), "yyyyMMdd",
+                            CultureInfo.InvariantCulture);
                     }
 
                 }
@@ -253,8 +258,8 @@ namespace FinalXML.InterMySql
             List<DetalleDocumento>  Items = new List<DetalleDocumento>();
             try
             {
-                string consulta = @" SELECT F6_CITEM,F6_CCODIGO,F6_CDESCRI,F6_CUNIDAD,F6_NCANTID,F6_NPRECIO,F6_NIGV,F6_NIMPMN
-                                     FROM INT_DOCELEDET  WHERE F6_CTD=@Sigla AND F6_CNUMSER=@Serie AND F6_CNUMDOC=@Numeracion  ";
+                string consulta = @" SELECT FA2_CITEM,FA2_CCODART,FA2_CNOMART,FA2_CUNIART,FA2_NCANTID,FA2_NPRECIO,FA2_NIMPIGV,FA2_NIMPOMN
+                                     FROM INT_DOCELEDET  WHERE FA2_CTIPDOC=@Sigla AND FA2_CSERDOC=@Serie AND FA2_CNUMDOC=@Numeracion  ";
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
                 cmd.Parameters.AddWithValue("@Sigla", Sigla);
@@ -312,8 +317,8 @@ namespace FinalXML.InterMySql
 
             try
             {
-                string consulta = @"SELECT F6_CITEM,F6_CCODIGO,F6_CDESCRI,F6_CUNIDAD,F6_NCANTID,F6_NPRECIO,F6_NIGV,F6_NIMPMN,F6_NPRSIGV,F6_NIMPUS
-                                     FROM INT_DOCELEDET  WHERE F6_CTD=@Sigla AND F6_CNUMSER=@Serie AND F6_CNUMDOC=@Numeracion";
+                string consulta = @"SELECT FA2_CITEM,FA2_CCODART,FA2_CNOMART,FA2_CUNIART,FA2_NCANTID,FA2_NPRECIO,FA2_NIMPIGV,FA2_NIMPOMN,FA2_NPRSIGV,FA2_NIMPOUS
+                                     FROM INT_DOCELEDET  WHERE FA2_CTIPDOC=@Sigla AND FA2_CSERDOC=@Serie AND FA2_CNUMDOC=@Numeracion";
                 tabla = new DataTable();
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
@@ -337,8 +342,8 @@ namespace FinalXML.InterMySql
 
             try
             {
-                string consulta = @"SELECT F6_CITEM,F6_CCODIGO,F6_CDESCRI,F6_CUNIDAD,F6_NCANTID,F6_NPRECIO,F6_NIGV,F6_NIMPMN,F6_NPRSIGV,F6_NIMPUS
-                                     FROM INT_DOCELEDET WHERE F6_CRUCEMI=@numruc AND F6_CTD=@Sigla AND F6_CNUMSER=@Serie AND F6_CNUMDOC=@Numeracion";
+                string consulta = @"SELECT FA2_CITEM,FA2_CCODART,FA2_CNOMART,FA2_CUNIART,FA2_NCANTID,FA2_NPRECIO,FA2_NIMPIGV,FA2_NIMPOMN,FA2_NPRSIGV,FA2_NIMPOUS
+                                     FROM INT_DOCELEDET WHERE FA2_CRUCEMI=@numruc AND FA2_CTIPDOC=@Sigla AND FA2_CSERDOC=@Serie AND FA2_CNUMDOC=@Numeracion";
                 tabla = new DataTable();
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
@@ -362,9 +367,9 @@ namespace FinalXML.InterMySql
         {
             try
             {
-                string consulta = @"UPDATE INT_DOCELECAB SET F5_COD_ESTADO_SUNAT='0',F5_ESTADO_ENVIO='3'
+                string consulta = @"UPDATE INT_DOCELECAB SET FA1_COD_ESTADO_SUNAT='0',FA1_ESTADO_ENVIO='3'
                                     FROM INT_DOCELECAB 
-                                   WHERE F5_CRUCEMI = @NumRuc AND F5_MENSAJE_SUNAT=@Ticket";
+                                   WHERE FA1_CRUCEMI = @NumRuc AND FA1_MENSAJE_SUNAT=@Ticket";
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
                 cmd.CommandType = CommandType.Text;

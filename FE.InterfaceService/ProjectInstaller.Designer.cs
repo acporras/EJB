@@ -33,17 +33,14 @@
             // 
             // serviceProcessInstaller1
             // 
-            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Ejecuta un procesos automatico que verica si los documentos registrados en la bas" +
-    "e de datos del sistema se encuentra en la base de datos de facturación y realiza" +
-    " el envio a SUNAT";
-            this.serviceInstaller1.DisplayName = "ServicioFacturacion";
-            this.serviceInstaller1.ServiceName = "FacturacionFE";
+            this.serviceInstaller1.Description = "Interface de Migración de Facturas para la base de datos comercial";
+            this.serviceInstaller1.ServiceName = "FE.InterfaceService2";
+            this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 

@@ -135,7 +135,7 @@ namespace FinalXML.InterMySql
         {
             try
             {
-                string consulta = @"UPDATE INT_DOCELECAB SET F5_ESTADO_ENVIO = 4 WHERE F5_CRUCEMI = @numruc AND F5_CTD = @tipdoc AND F5_CNUMSER = @sersun AND F5_CNUMDOC = @numsun";
+                string consulta = @"UPDATE INT_DOCELECAB SET FA1_ESTADO_ENVIO = 4 WHERE FA1_CRUCEMI = @numruc AND FA1_CTIPDOC = @tipdoc AND FA1_CSERDOC = @sersun AND FA1_CNUMDOC = @numsun";
                 con.conectarBD();
                 cmd = new SqlCommand(consulta, con.conector);
                 cmd.Parameters.AddWithValue("@numruc", SqlDbType.Char).Value = NumRuc;

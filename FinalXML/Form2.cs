@@ -21,6 +21,7 @@ using AForge.Imaging;
 using AForge.Imaging.Filters;
 using AForge.Imaging.Textures;
 using System.Configuration;
+using System.Globalization;
 
 namespace FinalXML
 {
@@ -205,7 +206,7 @@ namespace FinalXML
         {
             //Se valida que existan datos en la grilla
             var contribuyente = LeerEmpresa(cboEmpresa.SelectedValue.ToString());
-            if (grvResDetail.RowCount - 1 > 0)
+            if (grvResDetail.RowCount > 0)
             {
                 int Serie = AdmCEmpresa.GetCorrelativoMasivo(contribuyente.CodigoEmpresa, "RC");
                 //Datos del Resumen
@@ -329,7 +330,7 @@ namespace FinalXML
                         CVentas1.MensajeRespuesta = rpta.NroTicket.ToString();
                         CVentas1.NombreArchivo = rpta.NombreArchivo + ".xml";
                         CVentas1.NombreArchivoCDR = "R-" + rpta.NombreArchivo + ".zip";
-                        CVentas1.NombreArchivoPDF = oContribuyente.NroDocumento + "-" + DateTime.Parse(row.Cells["fecemi"].Value.ToString()).ToString("yyyy-MM-dd") + "-" + row.Cells["numdoc"].Value.ToString() + ".pdf";
+                        CVentas1.NombreArchivoPDF = oContribuyente.NroDocumento + "-" + DateTime.ParseExact(row.Cells["fecemi"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd") + "-" + row.Cells["numdoc"].Value.ToString() + ".pdf";
                         if (CVentas1 != null && CVentas1.Numeracion != "")
                         {
                             CVentas1.EstadoDocSunat = 0;
@@ -655,12 +656,12 @@ namespace FinalXML
                     switch (CVentas1.Sigla) {
                         case "FT":
                             //_documento.IdDocumento ="FE" + str1.PadLeft(2, pad).Trim() + "-" + str2.PadLeft(8, pad).Trim();
-                            _documento.IdDocumento = CVentas1.Serie + "-" + str2.PadLeft(8, pad).Trim();
+                            _documento.IdDocumento = CVentas1.Serie.Trim() + "-" + str2.PadLeft(8, pad).Trim();
                             _documento.TipoDocumento = "01";                            
                             break;
                         case "BV":
                             //_documento.IdDocumento = "BE" +str1.PadLeft(2, pad).Trim() +"-" + str2.PadLeft(8, pad).Trim();
-                            _documento.IdDocumento = CVentas1.Serie + "-" + str2.PadLeft(8, pad).Trim();
+                            _documento.IdDocumento = CVentas1.Serie.Trim() + "-" + str2.PadLeft(8, pad).Trim();
                             _documento.TipoDocumento = "03";
                             break;
                         case "NC": 

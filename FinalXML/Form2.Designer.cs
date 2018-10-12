@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonNavigator1 = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
             this.kryptonPage1 = new ComponentFactory.Krypton.Navigator.KryptonPage();
@@ -299,8 +299,8 @@
             this.DGPedidos.AllowUserToAddRows = false;
             this.DGPedidos.AllowUserToDeleteRows = false;
             this.DGPedidos.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.DGPedidos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.DGPedidos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGPedidos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idpedido,
             this.sigla1,
@@ -523,8 +523,8 @@
             this.dgListadoVentas.AllowUserToAddRows = false;
             this.dgListadoVentas.AllowUserToDeleteRows = false;
             this.dgListadoVentas.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgListadoVentas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgListadoVentas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgListadoVentas.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dgListadoVentas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sigla,
@@ -550,8 +550,8 @@
             this.dgListadoVentas.GridStyles.StyleColumn = ComponentFactory.Krypton.Toolkit.GridStyle.Sheet;
             this.dgListadoVentas.Location = new System.Drawing.Point(0, 71);
             this.dgListadoVentas.Name = "dgListadoVentas";
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgListadoVentas.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgListadoVentas.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgListadoVentas.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dgListadoVentas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgListadoVentas.Size = new System.Drawing.Size(1344, 391);
@@ -562,8 +562,8 @@
             // sigla
             // 
             this.sigla.DataPropertyName = "F5_CTD";
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sigla.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sigla.DefaultCellStyle = dataGridViewCellStyle3;
             this.sigla.HeaderText = "SIGLA";
             this.sigla.Name = "sigla";
             this.sigla.Visible = false;
