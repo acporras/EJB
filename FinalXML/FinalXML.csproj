@@ -274,6 +274,8 @@
     <Compile Include="Administradores\clsAdmEmpresa.cs" />
     <Compile Include="Administradores\clsAdmNumeracion.cs" />
     <Compile Include="Administradores\clsAdmPedido.cs" />
+    <Compile Include="BD\BaseDatos.cs" />
+    <Compile Include="BD\BaseDatosException.cs" />
     <Compile Include="Conexion\clsConexionMysql.cs" />
     <Compile Include="Entidades\clsEmpresa.cs" />
     <Compile Include="Entidades\clsCargaVentas.cs" />

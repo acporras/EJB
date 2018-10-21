@@ -32,6 +32,19 @@ namespace FinalXML.Administradores
             }
         }
 
+        public DataTable CargaEmpresa(String NumRuc)
+        {
+            try
+            {
+                return CEmpresa.CargaEmpresa(NumRuc);
+            }
+            catch (Exception ex)
+            {
+                DevComponents.DotNetBar.MessageBoxEx.Show("Se encontró el siguiente problema: " + ex.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+        }
+
         public Contribuyente LeerEmpresa(String NumRuc)
         {
             try
@@ -76,6 +89,32 @@ namespace FinalXML.Administradores
             try
             {
                 return CEmpresa.AnularDocumento(NumRuc, TipDoc, Sersun, NumSun);
+            }
+            catch (Exception ex)
+            {
+                DevComponents.DotNetBar.MessageBoxEx.Show("Se encontró el siguiente problema: " + ex.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+        public Boolean GuardarEmpresa(clsEmpresa empresa)
+        {
+            try
+            {
+                return CEmpresa.GuardarEmpresa(empresa);
+            }
+            catch (Exception ex)
+            {
+                DevComponents.DotNetBar.MessageBoxEx.Show("Se encontró el siguiente problema: " + ex.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+        public Boolean ActualizarEmpresa(clsEmpresa empresa)
+        {
+            try
+            {
+                return CEmpresa.ActualizarEmpresa(empresa);
             }
             catch (Exception ex)
             {
