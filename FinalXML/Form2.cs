@@ -72,7 +72,6 @@ namespace FinalXML
             grvResDetail.Rows.Clear();
             CargaEmpresa();
 
-            cboEstadoEmisor.SelectedIndex = 0;
             cboTipdoc.SelectedIndex = 0;
         }
         private void CargaEmpresa()
@@ -93,16 +92,6 @@ namespace FinalXML
                 cboEmpresaBaj.DataSource = dt_Empresa;
                 cboEmpresaBaj.ValueMember = "NU_EMINUMRUC";
                 cboEmpresaBaj.DisplayMember = "NO_EMIRAZSOC";
-                grvEmisores.Rows.Clear();
-                grvEmisores.ClearSelection();
-                foreach (DataRow row in dt_Empresa.Rows)
-                {
-                    grvEmisores.Rows.Add(row["NU_EMINUMRUC"].ToString(), row["NO_EMIRAZSOC"].ToString(), row["CO_EMICODAGE"].ToString(),
-                        row["NO_ESTEMIELE"].ToString(), row["NO_CONEMIELE"].ToString(), row["NO_EMIUBIGEO"].ToString(),
-                        row["NO_EMIDEPART"].ToString(), row["NO_EMIPROVIN"].ToString(), row["NO_EMIDISTRI"].ToString(),
-                        row["NO_EMIDIRFIS"].ToString(), row["NO_BASNOMSRV"].ToString(), row["NO_BASNOMBAS"].ToString(),
-                        row["NO_TABFACCAB"].ToString(), row["NO_TABFACDET"].ToString(), (row["FL_REGINACTI"].ToString() == "0") ? "Activo" : "Inactivo");
-                }
             }
             catch (Exception a) { MessageBox.Show(a.Message); }
             finally
@@ -114,14 +103,16 @@ namespace FinalXML
         {
             return AdmCEmpresa.LeerEmpresa(NumRuc);
         }
-        private void CargaVentas() {
+        private void CargaVentas()
+        {
             Cursor.Current = Cursors.WaitCursor;
-            try {
+            try
+            {
                 /*dgListadoVentas.DataSource = data;
                 data.DataSource = AdmCVenta.CargaVentas(dtpDesde.Value,dtpHasta.Value);
                 data.Filter = String.Empty;
                 filtro = String.Empty;*/
-                
+
 
                 Int32 index = 0;
                 String TipDoc = "";
@@ -150,14 +141,20 @@ namespace FinalXML
                 foreach (DataRow row in dt_Ventas.Rows)
                 {
                     dgListadoVentas.Rows.Add(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7],
-                        row[8], row[9], row[10], row[11],"","","",row[12], row[13], row[14]);
-                    if (row[11].ToString() == "ACEPTADA") {
+                        row[8], row[9], row[10], row[11], "", "", "", row[12], row[13], row[14]);
+                    if (row[11].ToString() == "ACEPTADA")
+                    {
                         dgListadoVentas.Rows[index].DefaultCellStyle.BackColor = Color.Aquamarine;
-                    } else if (row[11].ToString() == "RECHAZADO") {
+                    }
+                    else if (row[11].ToString() == "RECHAZADO")
+                    {
                         dgListadoVentas.Rows[index].DefaultCellStyle.BackColor = Color.Red;
-                    } else if (row[11].ToString()== "POR ENVIAR") {
+                    }
+                    else if (row[11].ToString() == "POR ENVIAR")
+                    {
                         dgListadoVentas.Rows[index].DefaultCellStyle.BackColor = Color.Cornsilk;
-                    }else if (row[11].ToString() == "ANULADO")
+                    }
+                    else if (row[11].ToString() == "ANULADO")
                     {
                         dgListadoVentas.Rows[index].DefaultCellStyle.BackColor = Color.Pink;
                     }
@@ -376,88 +373,6 @@ namespace FinalXML
             }
 
         }
-        private bool GuardarEmisor()
-        {
-            DataRowView drv_base = (DataRowView)cboBaseDatos.SelectedItem;
-            DataRowView drv_tabcab = (DataRowView)cboTablaCab.SelectedItem;
-            DataRowView drv_tabdet = (DataRowView)cboTablaDet.SelectedItem;
-            clsEmpresa empresa = new clsEmpresa
-            {
-                nu_eminumruc = txtnumruc.Text,
-                no_emirazsoc = txtrazsoc.Text,
-                co_emicodage = txtCodAge.Text,
-                no_estemiele = txtestemi.Text,
-                no_conemiele = txtconemi.Text,
-                no_emiubigeo = txtubigeo.Text,
-                no_emidepart = txtnomdep.Text,
-                no_emiprovin = txtnomprv.Text,
-                no_emidistri = txtnomdis.Text,
-                no_emidirfis = txtdomfis.Text,
-                no_bastipbas = "SQL",
-                no_basnomsrv = txtserver.Text,
-                no_basnombas = drv_base[0].ToString(),
-                no_basusrbas = txtuser.Text,
-                no_basusrpas = txtpass.Text,
-                no_tabfaccab = drv_tabcab[1].ToString(),
-                no_tabfacdet = drv_tabdet[1].ToString(),
-                no_ususolsun = txtusersun.Text,
-                no_passolsun = txtpasssun.Text,
-                fl_reginacti = cboEstadoEmisor.SelectedIndex.ToString()
-            };
-            return AdmCEmpresa.GuardarEmpresa(empresa);
-        }
-        public bool ActualizarEmisor()
-        {
-            DataRowView drv_base = (DataRowView)cboBaseDatos.SelectedItem;
-            DataRowView drv_tabcab = (DataRowView)cboTablaCab.SelectedItem;
-            DataRowView drv_tabdet = (DataRowView)cboTablaDet.SelectedItem;
-            clsEmpresa empresa = new clsEmpresa
-            {
-                nu_eminumruc = txtnumruc.Text,
-                no_emirazsoc = txtrazsoc.Text,
-                co_emicodage = txtCodAge.Text,
-                no_estemiele = txtestemi.Text,
-                no_conemiele = txtconemi.Text,
-                no_emiubigeo = txtubigeo.Text,
-                no_emidepart = txtnomdep.Text,
-                no_emiprovin = txtnomprv.Text,
-                no_emidistri = txtnomdis.Text,
-                no_emidirfis = txtdomfis.Text,
-                no_bastipbas = "SQL",
-                no_basnomsrv = txtserver.Text,
-                no_basnombas = drv_base[0].ToString(),
-                no_basusrbas = txtuser.Text,
-                no_basusrpas = txtpass.Text,
-                no_tabfaccab = drv_tabcab[1].ToString(),
-                no_tabfacdet = drv_tabdet[1].ToString(),
-                no_ususolsun = txtusersun.Text,
-                no_passolsun = txtpasssun.Text,
-                fl_reginacti = cboEstadoEmisor.SelectedIndex.ToString()
-            };
-            return AdmCEmpresa.ActualizarEmpresa(empresa);
-        }
-        private void loadTables()
-        {
-            DataRowView drv_base = (DataRowView)cboBaseDatos.SelectedItem;
-            if (drv_base[0].ToString() != "")
-            {
-                BaseDatos bdemi = new BaseDatos(txtserver.Text, BaseDatos.BBDD.SQL, drv_base[0].ToString(), txtuser.Text, txtpass.Text);
-                bdemi.Conectar();
-                DataTable dt_tablescab = new DataTable();
-                DataTable dt_tablesdet = new DataTable();
-                bdemi.Dame_Datos_DT("SELECT ID,NAME FROM SYSOBJECTS WHERE TYPE='U' ORDER BY NAME", false, ref dt_tablescab, "S");
-                bdemi.Dame_Datos_DT("SELECT ID,NAME FROM SYSOBJECTS WHERE TYPE='U' ORDER BY NAME", false, ref dt_tablesdet, "S");
-
-                bdemi.Desconectar();
-                cboTablaCab.DataSource = dt_tablescab;
-                cboTablaCab.ValueMember = "ID";
-                cboTablaCab.DisplayMember = "NAME";
-
-                cboTablaDet.DataSource = dt_tablesdet;
-                cboTablaDet.ValueMember = "ID";
-                cboTablaDet.DisplayMember = "NAME";
-            }
-        }
         /*private static Contribuyente CrearEmisor()
         {
             return new Contribuyente
@@ -508,7 +423,7 @@ namespace FinalXML
 
             _documento.TotalVenta = _documento.Gravadas + _documento.Exoneradas + _documento.Inafectas +
                                      _documento.TotalIgv + _documento.TotalIsc + _documento.TotalOtrosTributos;
-             _documento.MontoEnLetras = ConvertLetras.enletras(_documento.TotalVenta.ToString());
+            _documento.MontoEnLetras = ConvertLetras.enletras(_documento.TotalVenta.ToString());
 
 
             //montoEnLetrasTextBox.Text = _documento.MontoEnLetras;
@@ -524,7 +439,8 @@ namespace FinalXML
 
         }
 
-        private void GeneraPDF() {
+        private void GeneraPDF()
+        {
             try
             {
                 string codigoTipoDoc = "";
@@ -553,7 +469,8 @@ namespace FinalXML
                     return;
                 }
 
-                if (_documento.Items.Count < 1 && _documento.Receptor.NroDocumento == "") {
+                if (_documento.Items.Count < 1 && _documento.Receptor.NroDocumento == "")
+                {
                     MessageBox.Show("No se puede generar PDF");
                     return;
                 }
@@ -635,7 +552,7 @@ namespace FinalXML
 
         }
         #endregion Fin Métodos
-        
+
         private void Form2_Load(object sender, EventArgs e)
         {
             try
@@ -645,7 +562,7 @@ namespace FinalXML
 
 
             }
-            catch (Exception a ) { MessageBox.Show(a.Message); }
+            catch (Exception a) { MessageBox.Show(a.Message); }
         }
 
         private void btnGeneraXML_Click(object sender, EventArgs e)
@@ -657,7 +574,7 @@ namespace FinalXML
                     //FechaEmision = DateTime.Today.ToShortDateString(),
                     //Emisor = CrearEmisor()
                     Emisor = LeerEmpresa(cboEmpresaDoc.SelectedValue.ToString())
-                //IdDocumento = Numera.Serie+ "-" + str.PadLeft(8, pad)
+                    //IdDocumento = Numera.Serie+ "-" + str.PadLeft(8, pad)
                 };
                 List<DetalleDocumento> Items = new List<DetalleDocumento>();
                 DetalleDocumento ven = null;
@@ -667,7 +584,7 @@ namespace FinalXML
                 {
                     //Cabecera
                     CVentas1 = AdmCVenta.LeerVenta(CVentas.Sigla, CVentas.Serie, CVentas.Numeracion);
-                    
+
                     //Detalle
                     if (CVentas1.Serie != null && CVentas1.Sigla != null && CVentas1.Numeracion != null)
                     {
@@ -676,37 +593,42 @@ namespace FinalXML
 
                             _documento.Moneda = "PEN";
                         }
-                        else if (CVentas1.Moneda == "US") {
+                        else if (CVentas1.Moneda == "US")
+                        {
                             _documento.Moneda = "USD";
                         }
-                       
-                        dt_DetalleVenta = AdmCVenta.LeerDetalle(cboEmpresaDoc.SelectedValue.ToString() ,CVentas.Sigla, CVentas.Serie, CVentas.Numeracion);
-                        if (dt_DetalleVenta != null) {
+
+                        dt_DetalleVenta = AdmCVenta.LeerDetalle(cboEmpresaDoc.SelectedValue.ToString(), CVentas.Sigla, CVentas.Serie, CVentas.Numeracion);
+                        if (dt_DetalleVenta != null)
+                        {
 
                             int i = 0;
 
-                            foreach (DataRow row in dt_DetalleVenta.Rows) {
+                            foreach (DataRow row in dt_DetalleVenta.Rows)
+                            {
 
                                 if (Convert.ToString(row[1]).Trim() != "TXT")
                                 {
                                     if (i > 0) Items.Add(ven);
                                     ven = new DetalleDocumento();
                                     ven.Id = Convert.ToInt32(row[0]);
-                                    ven.CodigoItem =Convert.ToString(row[1]);
-                                    ven.Descripcion =Convert.ToString(row[2]).Trim();                                
-                                    ven.Cantidad =Math.Abs(Convert.ToDecimal(row[4]));
+                                    ven.CodigoItem = Convert.ToString(row[1]);
+                                    ven.Descripcion = Convert.ToString(row[2]).Trim();
+                                    ven.Cantidad = Math.Abs(Convert.ToDecimal(row[4]));
                                     ven.PrecioUnitario = Math.Abs(Convert.ToDecimal(row[5]));
-                                    if (_documento.Moneda == "PEN") {
+                                    if (_documento.Moneda == "PEN")
+                                    {
                                         ven.Suma = Math.Abs((Convert.ToDecimal(row[7])));
                                         ven.SubTotalVenta = Math.Abs((Convert.ToDecimal(row[7]) - Convert.ToDecimal(row[6])));
                                     }
-                                    else if(_documento.Moneda=="USD") {
+                                    else if (_documento.Moneda == "USD")
+                                    {
                                         ven.Suma = Math.Abs(Convert.ToDecimal(row[9]));//Math.Round(ven.PrecioUnitario * ven.Cantidad, 2);
                                         ven.SubTotalVenta = Math.Abs((Convert.ToDecimal(row[9]) - Convert.ToDecimal(row[6])));
                                     }
-                                                                       
-                                    ven.Impuesto =Math.Abs((Convert.ToDecimal(row[6]))); //Math.Round(ven.Suma - ven.SubTotalVenta, 2);
-                                    ven.TotalVenta =(ven.Suma);
+
+                                    ven.Impuesto = Math.Abs((Convert.ToDecimal(row[6]))); //Math.Round(ven.Suma - ven.SubTotalVenta, 2);
+                                    ven.TotalVenta = (ven.Suma);
                                     ven.TipoPrecio = "01";
                                     ven.UnidadCliente = Convert.ToString(row[3]).Trim();
                                     if (ven.Impuesto != 0)
@@ -726,7 +648,7 @@ namespace FinalXML
 
                                 i++;
                                 if (dt_DetalleVenta.Rows.Count == i) Items.Add(ven);
-                            }    
+                            }
                         }
                     }
                     _documento.Items = Items;
@@ -743,7 +665,7 @@ namespace FinalXML
                     string str2 = Convert.ToString(CVentas1.Numeracion);
                     char pad = '0';
                     /*NC - ND*/
-                    String NuevaSerie = "",NuevoTipoDocumento="";
+                    String NuevaSerie = "", NuevoTipoDocumento = "";
                     if (CVentas1.SiglaDocAfecta.Trim() == "FT")
                     {
 
@@ -758,32 +680,33 @@ namespace FinalXML
 
                     }
                     /*Fin NC - ND*/
-                    switch (CVentas1.Sigla) {
+                    switch (CVentas1.Sigla)
+                    {
                         case "FT":
                             //_documento.IdDocumento ="FE" + str1.PadLeft(2, pad).Trim() + "-" + str2.PadLeft(8, pad).Trim();
                             _documento.IdDocumento = CVentas1.Serie.Trim() + "-" + str2.PadLeft(8, pad).Trim();
-                            _documento.TipoDocumento = "01";                            
+                            _documento.TipoDocumento = "01";
                             break;
                         case "BV":
                             //_documento.IdDocumento = "BE" +str1.PadLeft(2, pad).Trim() +"-" + str2.PadLeft(8, pad).Trim();
                             _documento.IdDocumento = CVentas1.Serie.Trim() + "-" + str2.PadLeft(8, pad).Trim();
                             _documento.TipoDocumento = "03";
                             break;
-                        case "NC": 
+                        case "NC":
                             _documento.IdDocumento = str1.PadLeft(2, pad).Trim() + "-" + str2.PadLeft(8, pad).Trim();
                             _documento.TipoDocumento = "07";
-                            _documento.Relacionados.Add(new DocumentoRelacionado { NroDocumento= NuevaSerie +"-" + CVentas1.NumDocAfecta.Trim().PadLeft(8, pad).Trim(), TipoDocumento=NuevoTipoDocumento });
-                            _documento.Discrepancias.Add(new Discrepancia { Tipo="01", Descripcion="ANULACION DE DOCUMENTO", NroReferencia= NuevaSerie + "-" + CVentas1.NumDocAfecta.Trim().PadLeft(8, pad) });
+                            _documento.Relacionados.Add(new DocumentoRelacionado { NroDocumento = NuevaSerie + "-" + CVentas1.NumDocAfecta.Trim().PadLeft(8, pad).Trim(), TipoDocumento = NuevoTipoDocumento });
+                            _documento.Discrepancias.Add(new Discrepancia { Tipo = "01", Descripcion = "ANULACION DE DOCUMENTO", NroReferencia = NuevaSerie + "-" + CVentas1.NumDocAfecta.Trim().PadLeft(8, pad) });
                             break;
                         case "ND":
-                            _documento.IdDocumento =  str1.PadLeft(2, pad).Trim() +"-" + str2.PadLeft(8, pad).Trim();
+                            _documento.IdDocumento = str1.PadLeft(2, pad).Trim() + "-" + str2.PadLeft(8, pad).Trim();
                             _documento.TipoDocumento = "08";
                             _documento.Relacionados.Add(new DocumentoRelacionado { NroDocumento = NuevaSerie + "-" + CVentas1.NumDocAfecta.PadLeft(8, pad).Trim(), TipoDocumento = NuevoTipoDocumento });
                             _documento.Discrepancias.Add(new Discrepancia { Tipo = "03", Descripcion = "OTROS CONCEPTOS", NroReferencia = NuevaSerie + "-" + CVentas1.NumDocAfecta.Trim().PadLeft(8, pad) });
                             break;
 
                     }
-                    
+
 
                     switch (_documento.TipoDocumento)
                     {
@@ -806,21 +729,22 @@ namespace FinalXML
                             break;
                     }
 
-                    
+
                     RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documentos\\" +
                     $"{_documento.IdDocumento}.xml");
                     File.WriteAllBytes(RutaArchivo, Convert.FromBase64String(TramaXmlSinFirma));
                     btnEnvioSunat.Enabled = true;
-                    lblmensaje.Text="Archivo generado correctamente";
+                    lblmensaje.Text = "Archivo generado correctamente";
                     lblmensaje.Visible = true;
                     Proceso = 1;
 
                 }
-                else {
-                    MessageBox.Show("Seleccion un registro..!");  
+                else
+                {
+                    MessageBox.Show("Seleccion un registro..!");
                 }
             }
-            catch (Exception a ) { MessageBox.Show(a.Message); }
+            catch (Exception a) { MessageBox.Show(a.Message); }
             finally
             {
                 btnGeneraXML.Enabled = true;
@@ -830,12 +754,13 @@ namespace FinalXML
 
         private void dgListadoVentas_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
-            try {
+            try
+            {
                 if (dgListadoVentas.Rows.Count >= 1 && e.Row.Selected)
                 {
-                    CVentas.Sigla= e.Row.Cells[sigla.Name].Value.ToString();
-                    CVentas.Serie= e.Row.Cells[serie.Name].Value.ToString();
-                    CVentas.Numeracion= e.Row.Cells[numeracion.Name].Value.ToString();
+                    CVentas.Sigla = e.Row.Cells[sigla.Name].Value.ToString();
+                    CVentas.Serie = e.Row.Cells[serie.Name].Value.ToString();
+                    CVentas.Numeracion = e.Row.Cells[numeracion.Name].Value.ToString();
 
                 }
             }
@@ -847,13 +772,15 @@ namespace FinalXML
             try
             {
                 Cursor = Cursors.WaitCursor;
-                if (!AccesoInternet()) {
+                if (!AccesoInternet())
+                {
                     MessageBox.Show("No hay conexión con el servidor \n Verifique si existe conexión a internet e intente nuevamente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     lblmensaje.Visible = false;
                     return;
                 }
 
-                if (Proceso == 0) {
+                if (Proceso == 0)
+                {
 
                     MessageBox.Show("Debe generar el documento XML para enviar a SUNAT", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     lblmensaje.Visible = false;
@@ -903,18 +830,18 @@ namespace FinalXML
 
                 // RespuestaComun respuestaEnvio;
                 var respuestaEnvio = new EnviarDocumentoResponse();
-               
+
                 EnviarDocumentoController enviarDoc = new EnviarDocumentoController();
                 respuestaEnvio = enviarDoc.EnviarDocumentoResponse(enviarDocumentoRequest);
 
-                
+
                 // var rpta =new EnviarDocumentoResponse() ;//(EnviarDocumentoResponse)respuestaEnvio;
                 var rpta = (EnviarDocumentoResponse)respuestaEnvio;
                 //txtResult.Text = $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.MensajeRespuesta} siendo las {DateTime.Now}";
-                MessageBox.Show( rpta.MensajeRespuesta+ " Siendo las " + DateTime.Now);
+                MessageBox.Show(rpta.MensajeRespuesta + " Siendo las " + DateTime.Now);
                 try
                 {
-                   
+
                     if (rpta.Exito && !string.IsNullOrEmpty(rpta.TramaZipCdr))
                     {
                         File.WriteAllBytes($"{Program.CarpetaXml}\\{rpta.NombreArchivo}.xml",
@@ -930,15 +857,17 @@ namespace FinalXML
                     CVentas1.NumDocEmisor = oContribuyente.NroDocumento;
                     CVentas1.CodigoRespuesta = rpta.CodigoRespuesta;
                     CVentas1.MensajeRespuesta = rpta.MensajeRespuesta;
-                    CVentas1.NombreArchivo = rpta.NombreArchivo+".xml";
+                    CVentas1.NombreArchivo = rpta.NombreArchivo + ".xml";
                     CVentas1.NombreArchivoCDR = "R-" + rpta.NombreArchivo + ".zip";
-                    CVentas1.NombreArchivoPDF = _documento.Emisor.NroDocumento + "-" + DateTime.Parse(_documento.FechaEmision).ToString("yyyy-MM-dd") + "-" + _documento.IdDocumento+".pdf";
-                    if (rpta.CodigoRespuesta == "0") { //Aceptado
-                       
-                        if (CVentas1 != null && CVentas1.Numeracion != "") {
-                            CVentas1.EstadoDocSunat = 3;                         
+                    CVentas1.NombreArchivoPDF = _documento.Emisor.NroDocumento + "-" + DateTime.Parse(_documento.FechaEmision).ToString("yyyy-MM-dd") + "-" + _documento.IdDocumento + ".pdf";
+                    if (rpta.CodigoRespuesta == "0")
+                    { //Aceptado
+
+                        if (CVentas1 != null && CVentas1.Numeracion != "")
+                        {
+                            CVentas1.EstadoDocSunat = 3;
                             AdmCVenta.update(CVentas1);
-                        } 
+                        }
                     }
                     else if (rpta.CodigoRespuesta == null)
                     {
@@ -959,10 +888,10 @@ namespace FinalXML
                 }
                 catch (Exception ex)
                 {
-                    lblmensaje.Visible=false;
+                    lblmensaje.Visible = false;
                     MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                
+
 
                 if (!respuestaEnvio.Exito)
                     throw new ApplicationException(respuestaEnvio.MensajeError);
@@ -972,7 +901,7 @@ namespace FinalXML
             }
             catch (Exception ex)
             {
-             
+
                 MessageBox.Show(ex.Message);
                 lblmensaje.Visible = false;
             }
@@ -984,13 +913,14 @@ namespace FinalXML
             }
         }
 
-       
+
         private void btnGeneraPDF_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 GeneraPDF();
             }
-            catch (Exception a ) { MessageBox.Show(a.Message); }
+            catch (Exception a) { MessageBox.Show(a.Message); }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -1000,7 +930,8 @@ namespace FinalXML
 
         private void dgListadoVentas_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            try {
+            try
+            {
                 if (dgListadoVentas.Columns[e.ColumnIndex].Name.Equals("xml"))
                 {
                     //Aqui va el code que quieres que realize
@@ -1008,20 +939,27 @@ namespace FinalXML
                     System.Diagnostics.Process p = new System.Diagnostics.Process();
                     p.StartInfo.FileName = RutaArchivo;
                     p.Start();
-                } else if (dgListadoVentas.Columns[e.ColumnIndex].Name.Equals("cdr")) {
-                    
+                }
+                else if (dgListadoVentas.Columns[e.ColumnIndex].Name.Equals("cdr"))
+                {
+
                     RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CDR\\" + dgListadoVentas.CurrentRow.Cells[Nomcdr.Name].Value.ToString());
                     System.Diagnostics.Process p = new System.Diagnostics.Process();
                     p.StartInfo.FileName = RutaArchivo;
                     p.Start();
 
-                } else if (dgListadoVentas.Columns[e.ColumnIndex].Name.Equals("pdf")) {
-                   
-                    if (dgListadoVentas.CurrentRow.Cells[sigla.Name].Value.ToString()=="FT") {
+                }
+                else if (dgListadoVentas.Columns[e.ColumnIndex].Name.Equals("pdf"))
+                {
+
+                    if (dgListadoVentas.CurrentRow.Cells[sigla.Name].Value.ToString() == "FT")
+                    {
 
                         RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FACTURAS_PDF\\" + dgListadoVentas.CurrentRow.Cells[Nompdf.Name].Value.ToString());
 
-                    } else if (dgListadoVentas.CurrentRow.Cells[sigla.Name].Value.ToString() == "BV") {
+                    }
+                    else if (dgListadoVentas.CurrentRow.Cells[sigla.Name].Value.ToString() == "BV")
+                    {
 
                         RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BOLETAS_PDF\\" + dgListadoVentas.CurrentRow.Cells[Nompdf.Name].Value.ToString());
                     }
@@ -1042,7 +980,7 @@ namespace FinalXML
                     p.Start();
                 }
             }
-            catch (Exception a ) { MessageBox.Show(a.Message); }
+            catch (Exception a) { MessageBox.Show(a.Message); }
         }
 
         private void btnFiltrar_Click(object sender, EventArgs e)
@@ -1052,14 +990,15 @@ namespace FinalXML
 
         private void txtBuscaCliente_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         Int32 counter2 = 1;
 
         private void kryptonButton4_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 if (textBox7.Text == "")
                 {
                     MessageBox.Show("Ingrese Serie");
@@ -1082,14 +1021,16 @@ namespace FinalXML
                 {
                     CodTipoDocumento = "01";
                 }
-                else if (comboBox1.SelectedIndex == 1) {
+                else if (comboBox1.SelectedIndex == 1)
+                {
                     CodTipoDocumento = "03";
                 }
                 dglista2.Rows.Add(counter2, CodTipoDocumento, textBox7.Text, textBox1.Text, txtmotivo.Text);
                 counter2++;
                 textBox1.Text = "";
                 txtmotivo.Text = "";
-            } catch (Exception a ) { MessageBox.Show(a.Message); }
+            }
+            catch (Exception a) { MessageBox.Show(a.Message); }
         }
 
         private void kryptonButton3_Click(object sender, EventArgs e)
@@ -1106,7 +1047,7 @@ namespace FinalXML
                     MessageBox.Show("No hay registros por eliminar");
                 }
             }
-            catch (Exception a ) { MessageBox.Show(a.Message); }
+            catch (Exception a) { MessageBox.Show(a.Message); }
         }
 
         private void kryptonButton5_Click(object sender, EventArgs e)
@@ -1116,7 +1057,8 @@ namespace FinalXML
                 Cursor.Current = Cursors.WaitCursor;
                 if (dglista2.Rows.Count > 0)
                 {
-                    if (txtcorrelativo2.Text == "") {
+                    if (txtcorrelativo2.Text == "")
+                    {
 
                         MessageBox.Show("Ingrese Correlativo");
                         txtcorrelativo2.Focus();
@@ -1214,7 +1156,7 @@ namespace FinalXML
                     MessageBox.Show("No hay Registros para Generar Documento");
                     return;
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -1231,8 +1173,8 @@ namespace FinalXML
         {
             try
             {
-                Cursor = Cursors.WaitCursor;               
-                   
+                Cursor = Cursors.WaitCursor;
+
                 if (string.IsNullOrEmpty(txtNroTicket.Text)) return;
 
                 var oContribuyente = LeerEmpresa(cboEmpresaBaj.SelectedValue.ToString());
@@ -1259,7 +1201,7 @@ namespace FinalXML
 
                 txtResult.Text = $"{Resources.procesoCorrecto}{Environment.NewLine}{respuestaEnvio.MensajeRespuesta}";
 
-              
+
             }
             catch (Exception ex)
             {
@@ -1296,14 +1238,17 @@ namespace FinalXML
 
         private void btnSendResumen_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 Cursor.Current = Cursors.WaitCursor;
                 EnviarResumen();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            } finally
+            }
+            finally
             {
 
             }
@@ -1392,249 +1337,6 @@ namespace FinalXML
             {
                 MessageBox.Show("No se ha seleccionado ninguna Boleta para Anular");
             }
-        }
-
-        private void btnConsultarRuc_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                bool valida = true;
-                if (txtnumruc.Text.Length != 11)
-                {
-                    valida = false;
-                    MessageBox.Show("El numero de ruc debe contener 11 digitos");
-                }
-                /*if (!ValidaRuc(Convert.ToInt64(txtnumruc.Text)) && valida)
-                {
-                    valida = false;
-                    MessageBox.Show("El numero de ruc es invalido");
-                }*/
-
-                if (valida)
-                {
-                    WebRequest request = WebRequest.Create(String.Format("http://wmtechnology.org/Consultar-RUC/?modo=1&btnBuscar=Buscar&nruc={0}", txtnumruc.Text));
-                    request.Method = "POST";
-                    WebResponse response = request.GetResponse();
-                    StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("ISO-8859-1"));
-
-                    String sunathtml = sr.ReadToEnd();
-                    sunathtml = sunathtml.Trim();
-                    //Se prepara el documento
-                    sunathtml = Regex.Replace(sunathtml, @"<!--.*?-->", ""); //Se elimina comentarios
-                    sunathtml = Regex.Replace(sunathtml, @"<meta.*?>", ""); //Se elimina etiquetas meta
-                    sunathtml = Regex.Replace(sunathtml, @"<link.*?>", ""); //Se elimina etiquetas link
-                    sunathtml = Regex.Replace(sunathtml, @"&copy.*?;", ""); //Se elimina texto copy
-                    sr.Close();
-                    XmlDocument doc = new XmlDocument();
-                    //Se carga el XML preparado
-                    doc.LoadXml(sunathtml);
-                    //Se selecciona el nodo con la información
-                    XmlNodeList xnList = doc.SelectNodes("/html/body/div[@class='container']/div/div/div[@class='panel panel-primary']/div[@class='list-group']");
-                    foreach (XmlNode xn in xnList)
-                    {
-                        doc.LoadXml(String.Format("<root>{0}</root>", xn.InnerXml));
-                    }
-                    //Se recuperan los datos del RUC solicitado
-                    String[] emisor = doc.SelectSingleNode("/root/div[1]/div/div[2]/h4").InnerText.Split('-');
-                    String numruc = emisor[0].ToString().Trim();
-                    String razsoc = emisor[1].ToString().Trim();
-                    String estado = doc.SelectSingleNode("/root/div[2]/div/div[2]/p").InnerText.Trim();
-                    String condic = doc.SelectSingleNode("/root/div[3]/div/div[2]/p").InnerText.Trim();
-                    String ubigeo = doc.SelectSingleNode("/root/div[4]/div/div[2]").InnerText.Trim();
-                    String nomdep = doc.SelectSingleNode("/root/div[5]/div/div[2]").InnerText.Trim();
-                    String nomprv = doc.SelectSingleNode("/root/div[6]/div/div[2]").InnerText.Trim();
-                    String nomdis = doc.SelectSingleNode("/root/div[7]/div/div[2]").InnerText.Trim();
-                    String domfis = doc.SelectSingleNode("/root/div[8]/div/div[2]/p").InnerText.Trim();
-
-                    //Se llenan los datos en el formulario
-                    txtrazsoc.Text = razsoc;
-                    txtestemi.Text = estado;
-                    txtconemi.Text = condic;
-                    txtubigeo.Text = ubigeo;
-                    txtnomdep.Text = nomdep;
-                    txtnomprv.Text = nomprv;
-                    txtnomdis.Text = nomdis;
-                    txtdomfis.Text = domfis;
-                }
-                else
-                {
-                    txtrazsoc.Clear();
-                    txtestemi.Clear();
-                    txtconemi.Clear();
-                    txtubigeo.Clear();
-                    txtnomdep.Clear();
-                    txtnomprv.Clear();
-                    txtnomdis.Clear();
-                    txtdomfis.Clear();
-                }
-            }
-            catch (Exception ex)
-            {
-                txtrazsoc.Clear();
-                txtestemi.Clear();
-                txtconemi.Clear();
-                txtubigeo.Clear();
-                txtnomdep.Clear();
-                txtnomprv.Clear();
-                txtnomdis.Clear();
-                txtdomfis.Clear();
-
-                MessageBox.Show("Error en la petición: " + ex.Message.ToString());
-
-
-            }
-        }
-
-        private void txtnumruc_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                btnConsultarRuc.PerformClick();
-            }
-        }
-
-        private void btnConectarServer_Click(object sender, EventArgs e)
-        {
-            BaseDatos bdemi = new BaseDatos(txtserver.Text, BaseDatos.BBDD.SQL, "master", txtuser.Text, txtpass.Text);
-            try
-            {
-                bdemi.Conectar();
-                DataTable dt_basedatos = new DataTable();
-                bdemi.Dame_Datos_DT("SELECT NAME, DATABASE_ID FROM sys.databases", false, ref dt_basedatos, "S");
-                bdemi.Desconectar();
-                cboBaseDatos.DataSource = dt_basedatos;
-                cboBaseDatos.ValueMember = "DATABASE_ID";
-                cboBaseDatos.DisplayMember = "NAME";
-
-                MessageBox.Show("Conexión creada correctamente");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al conectar: " + ex.Message.ToString());
-            }
-        }
-
-        private void cboBaseDatos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            loadTables();
-
-        }
-
-        private void btnSaveEmisor_Click(object sender, EventArgs e)
-        {
-            if (txtrazsoc.Text == "")
-            {
-                MessageBox.Show("Debe ingresar un RUC y realizar la busqueda");
-                return;
-            }
-            if (txtCodAge.Text == "")
-            {
-                MessageBox.Show("Debe ingresar un codigo de agencia");
-                return;
-            }
-            if (txtserver.Text == "")
-            {
-                MessageBox.Show("Debe ingresar el nombre del servidor de base de datos");
-                return;
-            }
-            if (txtuser.Text == "")
-            {
-                MessageBox.Show("Debe ingresar el usuario de base de datos");
-                return;
-            }
-            if (txtpass.Text == "")
-            {
-                MessageBox.Show("Debe ingresar la clave de base de datos");
-                return;
-            }
-            if (cboBaseDatos.Items.Count == 0)
-            {
-                MessageBox.Show("No existe ninguna base de datos para conectar");
-                return;
-            }
-
-            if (btnCancelEditEmi.Visible)
-            {
-                if (ActualizarEmisor())
-                {
-                    MessageBox.Show("Se ha actualizado correctamente el emisor electronico");
-                }
-            }
-            else
-            {
-                if (GuardarEmisor())
-                {
-                    MessageBox.Show("Se ha guardado correctamente el emisor electronico");
-                };
-            }
-
-            CargaEmpresa();
-        }
-
-        private void btnEditarEmisor_Click(object sender, EventArgs e)
-        {
-            if (grvEmisores.CurrentRow != null)
-            {
-                btnCancelEditEmi.Visible = true;
-                DataGridViewRow row = grvEmisores.Rows[grvEmisores.CurrentRow.Index];
-                DataTable dt_empresa = AdmCEmpresa.CargaEmpresa(row.Cells[0].Value.ToString());
-                String basedatos = "", tablacab = "", tabladet = "";
-                foreach (DataRow dtrow in dt_empresa.Rows)
-                {
-                    txtnumruc.Text = dtrow["NU_EMINUMRUC"].ToString();
-                    txtCodAge.Text = dtrow["CO_EMICODAGE"].ToString();
-                    txtusersun.Text = dtrow["NO_USUSOLSUN"].ToString();
-                    txtpasssun.Text = dtrow["NO_PASSOLSUN"].ToString();
-                    txtserver.Text = dtrow["NO_BASNOMSRV"].ToString();
-                    txtuser.Text = dtrow["NO_BASUSRBAS"].ToString();
-                    txtpass.Text = dtrow["NO_BASUSRPAS"].ToString();
-                    basedatos = dtrow["NO_BASNOMBAS"].ToString();
-                    tablacab = dtrow["NO_TABFACCAB"].ToString();
-                    tabladet = dtrow["NO_TABFACDET"].ToString();
-                    cboEstadoEmisor.SelectedIndex = Convert.ToInt32(dtrow["FL_REGINACTI"].ToString());
-                }
-                btnConsultarRuc.PerformClick();
-                btnConectarServer.PerformClick();
-            }
-            else
-            {
-                MessageBox.Show("No se ha seleccionado ningun registro ...!!");
-            }
-        }
-
-        private void btnCancelEditEmi_Click(object sender, EventArgs e)
-        {
-            txtnumruc.Clear();
-            txtrazsoc.Clear();
-            txtestemi.Clear();
-            txtconemi.Clear();
-            txtubigeo.Clear();
-            txtnomdep.Clear();
-            txtnomprv.Clear();
-            txtnomdis.Clear();
-            txtdomfis.Clear();
-            txtCodAge.Clear();
-            txtusersun.Clear();
-            txtpasssun.Clear();
-            txtserver.Clear();
-            txtuser.Clear();
-            txtpass.Clear();
-
-            DataTable nothing = new DataTable();
-            cboBaseDatos.DataSource = nothing;
-            cboBaseDatos.DisplayMember = null;
-            cboBaseDatos.ValueMember = null;
-
-            cboTablaCab.DataSource = nothing;
-            cboTablaCab.DisplayMember = null;
-            cboTablaCab.ValueMember = null;
-
-            cboTablaDet.DataSource = nothing;
-            cboTablaDet.DisplayMember = null;
-            cboTablaDet.ValueMember = null;
-
-            btnCancelEditEmi.Visible = false;
         }
     }
 }
